@@ -5,7 +5,7 @@ import {
   HillshadeLayout,
   HillshadePaint,
 } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, ref, watch } from "vue";
+import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   filter?: unknown[] | undefined;
 }
 
-const layer = ref<AnyLayer>();
+const layer = shallowRef<AnyLayer>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 

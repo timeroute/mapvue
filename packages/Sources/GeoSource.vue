@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, onMounted, onUnmounted, ref, watch } from "vue";
+import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 import type {
   AnySourceImpl,
@@ -31,7 +31,7 @@ interface Props {
   tolerance?: number;
 }
 
-const source = ref<AnySourceImpl>();
+const source = shallowRef<AnySourceImpl>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 
