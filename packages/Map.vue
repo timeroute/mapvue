@@ -1,5 +1,13 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, provide, ref, watch } from "vue";
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  provide,
+  ref,
+  shallowRef,
+  watch,
+} from "vue";
 import mapboxgl, { Map, LngLatLike } from "mapbox-gl";
 import type { MapboxOptions } from "./types";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -11,9 +19,12 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emits = defineEmits<{
+  (e: "loaded"): void;
+}>();
 
-const mapRef = ref<HTMLElement>();
-const map = ref<Map>();
+const mapRef = shallowRef<HTMLElement>();
+const map = shallowRef<Map>();
 const loaded = ref<boolean>(false);
 
 provide(
@@ -94,6 +105,7 @@ onMounted(() => {
       pitch: props.options?.pitch || 0,
     });
     map.value.on("load", () => {
+      emits("loaded");
       loaded.value = true;
     });
   }
