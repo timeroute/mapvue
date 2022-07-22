@@ -7,6 +7,10 @@
     "name": "chinesejar",
     "email": "chinesejar@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timeroute/mapvue.git"
+  },
   "license": "MIT",
   "keywords": [
     "mapbox-gl",
