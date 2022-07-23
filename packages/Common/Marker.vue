@@ -5,7 +5,14 @@ import mapboxgl, {
   MarkerOptions,
   PointLike,
 } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
+import {
+  inject,
+  onMounted,
+  onUnmounted,
+  shallowRef,
+  useSlots,
+  watch,
+} from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -13,9 +20,27 @@ interface Props {
   options: MarkerOptions;
 }
 
+const slots = useSlots();
 const marker = shallowRef<Marker>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
+
+const renderMarker = () => {
+  if (!map) return;
+  if (marker.value) {
+    marker.value.remove();
+  }
+  marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
+    props.center
+  );
+  const popupEl = slots?.popup()?.[0];
+  console.log(popupEl);
+
+  if (popupEl) {
+    marker.value.setPopup(new mapboxgl.Popup().setHTML(popupEl));
+  }
+  marker.value.addTo(map.value);
+};
 
 watch(
   () => props.center,
@@ -39,11 +64,32 @@ watch(
 );
 
 watch(
+  () => props.options?.scale,
+  () => {
+    renderMarker();
+  }
+);
+
+watch(
   () => props.options?.rotation,
   (rotation) => {
     if (rotation) {
       marker.value?.setRotation(rotation);
     }
+  }
+);
+
+watch(
+  () => props.options?.color,
+  () => {
+    renderMarker();
+  }
+);
+
+watch(
+  () => props.options?.anchor,
+  () => {
+    renderMarker();
   }
 );
 
@@ -66,8 +112,7 @@ watch(
 );
 
 onMounted(() => {
-  if (!map) return;
-  marker.value = new mapboxgl.Marker(props.options || {}).addTo(map.value);
+  renderMarker();
 });
 
 onUnmounted(() => {
@@ -77,5 +122,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <slot name="popup"></slot>
+  <div class="popup">
+    <slot name="popup"></slot>
+  </div>
 </template>
+
+<style scoped>
+.popup {
+  display: none;
+}
+</style>
