@@ -1,6 +1,11 @@
 import type { App } from "vue";
 import VMap from "./Map.vue";
 import VSprite from "./Common/Sprite.vue";
+import VMarker from "./Common/Marker.vue";
+import VPopup from "./Common/Popup.vue";
+import VAttributionControl from "./Controls/AttributionControl.vue";
+import VNavigationControl from "./Controls/NavigationControl.vue";
+import VScaleControl from "./Controls/ScaleControl.vue";
 import VBackgroundLayer from "./Layers/BackgroundLayer.vue";
 import VCircleLayer from "./Layers/CircleLayer.vue";
 import VFillExtrusionLayer from "./Layers/FillExtrusionLayer.vue";
@@ -21,6 +26,11 @@ const MapVue = {
   install: (app: App<Element>) => {
     app.component("v-map", VMap);
     app.component("v-sprite", VSprite);
+    app.component("v-marker", VMarker);
+    app.component("v-popup", VPopup);
+    app.component("v-attribution-control", VAttributionControl);
+    app.component("v-navigation-control", VNavigationControl);
+    app.component("v-scale-control", VScaleControl);
     app.component("v-background-layer", VBackgroundLayer);
     app.component("v-circle-layer", VCircleLayer);
     app.component("v-fillextrusion-layer", VFillExtrusionLayer);
@@ -37,6 +47,31 @@ const MapVue = {
     app.component("v-image-source", VImageSource);
     app.component("v-video-source", VVideoSource);
   },
+};
+
+export {
+  VMap,
+  VFillLayer,
+  VFillExtrusionLayer,
+  VLineLayer,
+  VCircleLayer,
+  VRasterLayer,
+  VBackgroundLayer,
+  VHeatmapLayer,
+  VHillshadeLayer,
+  VSymbolLayer,
+  VGeoSource,
+  VRasterSource,
+  VRasterDemSource,
+  VImageSource,
+  VVideoSource,
+  VVectorSource,
+  VSprite,
+  VMarker,
+  VPopup,
+  VAttributionControl,
+  VNavigationControl,
+  VScaleControl,
 };
 
 export default MapVue;

@@ -1,7 +1,6 @@
 {
   "name": "mapvue",
-  "version": "0.0.6",
-  "type": "module",
+  "version": "0.0.7",
   "description": "MapVue is a comprehensive MapboxGL component library. You can easily and happily apply MapVue to your Vue projects. Import various data sources and layers in the form of components, and modify the state of the layer by modifying the parameters of props.",
   "author": {
     "name": "chinesejar",
@@ -11,10 +10,18 @@
     "type": "git",
     "url": "https://github.com/timeroute/mapvue.git"
   },
+  "type": "module",
   "files": [
-    "dist/*.js",
-    "dist/*.css"
+    "dist"
   ],
+  "main": "./dist/mapvue.umd.cjs",
+  "module": "./dist/mapvue.js",
+  "exports": {
+    ".": {
+      "import": "./dist/mapvue.js",
+      "require": "./dist/mapvue.umd.cjs"
+    }
+  },
   "license": "MIT",
   "keywords": [
     "mapbox-gl",

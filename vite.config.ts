@@ -15,7 +15,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "packages/index.ts"),
-      name: "mapvue",
+      name: "MapVue",
+      fileName: "mapvue",
     },
     rollupOptions: {
       external: ["vue"],
