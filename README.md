@@ -15,7 +15,7 @@ For example, the `v-fill-layer` component actually wraps the `FillLayer` class.
 ## Installation
 
 ```shell
-pnpm add @timeroute/mapvue
+pnpm add mapvue
 ```
 
 ## Import
