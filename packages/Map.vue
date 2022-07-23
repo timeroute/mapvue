@@ -22,6 +22,8 @@ const props = defineProps<Props>();
 const emits = defineEmits<{
   (e: "loaded"): void;
 }>();
+// eslint-disable-next-line vue/no-setup-props-destructure
+mapboxgl.accessToken = props.accessToken;
 
 const mapRef = shallowRef<HTMLElement>();
 const map = shallowRef<Map>();
@@ -92,7 +94,6 @@ watch(
 );
 
 onMounted(() => {
-  mapboxgl.accessToken = props.accessToken;
   if (mapRef.value) {
     map.value = new Map({
       container: mapRef.value,
