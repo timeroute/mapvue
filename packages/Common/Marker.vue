@@ -109,7 +109,8 @@ watch(
 );
 
 const onDragEvent = (e) => {
-  emits("update:center", e.target.getLngLat());
+  const { lng, lat } = e.target.getLngLat();
+  emits("update:center", [lng, lat]);
 };
 
 onMounted(() => {

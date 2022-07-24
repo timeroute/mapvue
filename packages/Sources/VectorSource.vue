@@ -49,9 +49,9 @@ onMounted(() => {
     console.log(map.value, props);
     const options: VectorSource = {
       id: props.id,
-      type: "raster",
+      type: "vector",
       scheme: props.scheme || "xyz",
-      tileSize: props.tileSize || 256,
+      tileSize: props.tileSize || 512,
       attribution: props.attribution || "",
       bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
       minzoom: props.minzoom || 0,

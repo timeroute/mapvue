@@ -12,6 +12,7 @@ import { mapvueSymbol } from "../symbols";
 interface Props {
   id: string;
   source: string;
+  sourceLayer?: string;
   paint?: CirclePaint;
   layout?: CircleLayout;
   minzoom?: number;
@@ -129,6 +130,9 @@ onMounted(() => {
     };
     if (props.filter) {
       options.filter = props.filter;
+    }
+    if (props.sourceLayer) {
+      options["source-layer"] = props.sourceLayer;
     }
     map.value.addLayer(options);
     layer.value = map.value.getLayer(props.id);

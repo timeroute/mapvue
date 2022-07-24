@@ -12,32 +12,33 @@ const props = defineProps<Props>();
 
 const updateImage = () => {
   if (!map) return;
-  const doImage = map.value.hasImage(props.name)
-    ? map.value.updateImage
-    : map.value.addImage;
+  const hasImage = map.value.hasImage(props.name);
   if (
     props.url instanceof HTMLImageElement ||
     props.url instanceof ImageBitmap
   ) {
-    doImage(props.name, props.url);
+    if (hasImage) {
+      map.value.updateImage(props.name, props.url);
+    } else {
+      map.value.addImage(props.name, props.url);
+    }
   } else if (typeof props.url === "string") {
     map.value.loadImage(props.url, (err, image) => {
-      if (err || !image) return;
-      doImage(props.name, image);
+      if (err) return;
+      if (image) {
+        if (hasImage) {
+          map.value.updateImage(props.name, image);
+        } else {
+          map.value.addImage(props.name, image);
+        }
+      }
     });
   }
 };
 
-watch(
-  () => props.url,
-  () => {
-    updateImage();
-  }
-);
+watch(() => props.url, updateImage);
 
-onMounted(() => {
-  updateImage();
-});
+onMounted(updateImage);
 
 onUnmounted(() => {
   if (map && map.value.hasImage(props.name)) {
@@ -45,3 +46,5 @@ onUnmounted(() => {
   }
 });
 </script>
+
+<template></template>

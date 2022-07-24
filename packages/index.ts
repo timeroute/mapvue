@@ -3,6 +3,7 @@ import VMap from "./Map.vue";
 import VSprite from "./Common/Sprite.vue";
 import VMarker from "./Common/Marker.vue";
 import VPopup from "./Common/Popup.vue";
+import VFog from "./Common/Fog.vue";
 import VAttributionControl from "./Controls/AttributionControl.vue";
 import VNavigationControl from "./Controls/NavigationControl.vue";
 import VScaleControl from "./Controls/ScaleControl.vue";
@@ -28,6 +29,7 @@ const MapVue = {
     app.component("v-sprite", VSprite);
     app.component("v-marker", VMarker);
     app.component("v-popup", VPopup);
+    app.component("v-fog", VFog);
     app.component("v-attribution-control", VAttributionControl);
     app.component("v-navigation-control", VNavigationControl);
     app.component("v-scale-control", VScaleControl);
