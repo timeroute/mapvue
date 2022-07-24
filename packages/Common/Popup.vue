@@ -5,7 +5,15 @@ import mapboxgl, {
   Popup,
   PopupOptions,
 } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { renderToString } from "vue/server-renderer";
+import {
+  useSlots,
+  inject,
+  onMounted,
+  onUnmounted,
+  shallowRef,
+  watch,
+} from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -13,10 +21,10 @@ interface Props {
   options: PopupOptions;
 }
 
+const slots = useSlots();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 const popup = shallowRef<Popup>();
-const popupRef = ref();
 
 watch(
   () => props.center,
@@ -33,7 +41,6 @@ watch(
     popup.value = new mapboxgl.Popup(props.options || {}).setLngLat(
       props.center
     );
-    popup.value.setHTML(popupRef.value?.innerHTML);
     popup.value.addTo(map?.value);
   }
 );
@@ -58,25 +65,30 @@ watch(
 );
 
 watch(
-  () => popupRef.value,
-  () => {
-    console.log(popupRef.value);
-
-    if (popup.value && map) {
-      popup.value.setHTML(popupRef.value.innerHTML).addTo(map.value);
+  () => renderToString(slots.popup()[0]),
+  async (dom) => {
+    const html = await dom;
+    console.log(html, popup.value, map);
+    if (map) {
+      if (popup.value) {
+        popup.value.setHTML(html).addTo(map.value);
+      } else {
+        popup.value = new mapboxgl.Popup(props.options || {})
+          .setLngLat(props.center)
+          .setHTML(html)
+          .addTo(map.value);
+      }
     }
   },
   {
-    deep: true,
     immediate: true,
   }
 );
 
 onMounted(() => {
   if (!map) return;
-  popup.value = new mapboxgl.Popup(props.options || {})
-    .setLngLat(props.center)
-    .addTo(map.value);
+  popup.value = new mapboxgl.Popup(props.options || {}).setLngLat(props.center);
+  popup.value.setText("sdfsdf").addTo(map.value);
 });
 
 onUnmounted(() => {
@@ -86,7 +98,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="popup" ref="popupRef">
+  <div class="popup">
     <slot name="popup"></slot>
   </div>
 </template>

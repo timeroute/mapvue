@@ -7,7 +7,7 @@ interface Props {
   showCompass?: boolean | undefined;
   showZoom?: boolean | undefined;
   visualizePitch?: boolean | undefined;
-  position:
+  position?:
     | "top-right"
     | "top-left"
     | "bottom-right"
@@ -22,9 +22,9 @@ const map = inject(mapvueSymbol);
 onMounted(() => {
   if (!map) return;
   control.value = new mapboxgl.NavigationControl({
-    showCompass: props.showCompass || true,
-    showZoom: props.showZoom || true,
-    visualizePitch: props.visualizePitch || true,
+    showCompass: props.showCompass || false,
+    showZoom: props.showZoom || false,
+    visualizePitch: props.visualizePitch || false,
   });
   map.value.addControl(control.value, props.position || "top-right");
 });

@@ -6,7 +6,7 @@ import { mapvueSymbol } from "../symbols";
 interface Props {
   compact?: boolean | undefined;
   customAttribution?: string | string[] | undefined;
-  position:
+  position?:
     | "top-right"
     | "top-left"
     | "bottom-right"
@@ -21,7 +21,7 @@ const map = inject(mapvueSymbol);
 onMounted(() => {
   if (!map) return;
   control.value = new mapboxgl.AttributionControl({
-    compact: props.compact || true,
+    compact: props.compact || false,
     customAttribution: props.customAttribution,
   });
   map.value.addControl(control.value, props.position || "bottom-right");
