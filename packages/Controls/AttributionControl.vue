@@ -21,10 +21,10 @@ const map = inject(mapvueSymbol);
 onMounted(() => {
   if (!map) return;
   control.value = new mapboxgl.AttributionControl({
-    compact: props.compact,
+    compact: props.compact || true,
     customAttribution: props.customAttribution,
   });
-  map.value.addControl(control.value, props.position);
+  map.value.addControl(control.value, props.position || "bottom-right");
 });
 
 onUnmounted(() => {

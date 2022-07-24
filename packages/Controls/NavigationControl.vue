@@ -22,11 +22,11 @@ const map = inject(mapvueSymbol);
 onMounted(() => {
   if (!map) return;
   control.value = new mapboxgl.NavigationControl({
-    showCompass: props.showCompass,
-    showZoom: props.showZoom,
-    visualizePitch: props.visualizePitch,
+    showCompass: props.showCompass || true,
+    showZoom: props.showZoom || true,
+    visualizePitch: props.visualizePitch || true,
   });
-  map.value.addControl(control.value, props.position);
+  map.value.addControl(control.value, props.position || "top-right");
 });
 
 onUnmounted(() => {

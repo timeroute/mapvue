@@ -1,5 +1,7 @@
 # MapVue
 
+> The library is in developing, not recommended using in production.
+
 A well-packaged MapboxGL component library
 
 MapVue is a comprehensive MapboxGL component library. You can easily and happily apply MapVue to your Vue projects. Import various data sources and layers in the form of components, and modify the state of the layer by modifying the parameters of props.

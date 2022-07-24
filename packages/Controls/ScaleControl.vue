@@ -24,7 +24,7 @@ onMounted(() => {
     maxWidth: props.maxWidth ?? 100,
     unit: props.unit || "metric",
   });
-  map.value.addControl(control.value, props.position);
+  map.value.addControl(control.value, props.position || "top-right");
 });
 
 onUnmounted(() => {
