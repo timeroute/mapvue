@@ -18,17 +18,21 @@ const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 const emits = defineEmits<{
   (e: "click"): void;
+  (e: "update:center", center: LngLatLike): void;
 }>();
 
 const renderMarker = () => {
   if (!map) return;
   if (marker.value) {
+    marker.value?.off("dragend", onDragEvent);
     marker.value.remove();
   }
   marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
     props.center
   );
   marker.value.addTo(map.value);
+  marker.value?.getElement().addEventListener("click", onClickEvent);
+  marker.value?.on("dragend", onDragEvent);
 };
 
 const onClickEvent = () => {
@@ -104,14 +108,18 @@ watch(
   }
 );
 
+const onDragEvent = (e) => {
+  emits("update:center", e.target.getLngLat());
+};
+
 onMounted(() => {
   renderMarker();
-  marker.value?.getElement().addEventListener("click", onClickEvent);
 });
 
 onUnmounted(() => {
   if (!map) return;
   if (marker.value) {
+    marker.value.off("dragend", onDragEvent);
     marker.value.getElement().removeEventListener("click", onClickEvent);
     marker.value.remove();
   }
