@@ -5,7 +5,16 @@ import mapboxgl, {
   Popup,
   PopupOptions,
 } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
+import {
+  inject,
+  onMounted,
+  onUnmounted,
+  ref,
+  render,
+  shallowRef,
+  useSlots,
+  watch,
+} from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -13,36 +22,55 @@ interface Props {
   options: PopupOptions;
 }
 
-const popup = shallowRef<Popup>();
+const slots = useSlots();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
+const popup = shallowRef<Popup>(new mapboxgl.Popup(props.options || {}));
+const popupRef = ref();
+
+defineExpose({
+  popup,
+});
 
 watch(
   () => props.center,
   () => {
-    popup.value?.setLngLat(props.center);
+    if (map) popup.value?.setLngLat(props.center);
   }
 );
 
 watch(
   () => props.options?.offset,
   () => {
-    popup.value?.setOffset(props.options?.offset as PointLike);
+    if (!map) return;
+    popup.value
+      ?.setOffset(props.options?.offset as PointLike)
+      .addTo(map?.value);
   }
 );
 
 watch(
   () => props.options?.maxWidth,
   (maxWidth) => {
-    if (maxWidth) {
-      popup.value?.setMaxWidth(maxWidth);
+    if (maxWidth && map) {
+      popup.value?.setMaxWidth(maxWidth).addTo(map.value);
+    }
+  }
+);
+
+watch(
+  () => slots?.popup(),
+  (node) => {
+    if (node) {
+      render(node[0], popupRef.value);
+      popup.value.setDOMContent(popupRef.value).addTo(map?.value);
     }
   }
 );
 
 onMounted(() => {
   if (!map) return;
-  popup.value = new mapboxgl.Popup(props.options || {}).addTo(map.value);
+  popup.value.addTo(map.value);
 });
 
 onUnmounted(() => {
@@ -52,5 +80,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <slot></slot>
+  <div class="popup">
+    <div ref="popupRef" />
+    <slot name="popup"></slot>
+  </div>
 </template>
+
+<style scoped>
+.popup {
+  display: none;
+}
+</style>

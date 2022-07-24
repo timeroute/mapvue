@@ -5,14 +5,7 @@ import mapboxgl, {
   MarkerOptions,
   PointLike,
 } from "mapbox-gl";
-import {
-  inject,
-  onMounted,
-  onUnmounted,
-  shallowRef,
-  useSlots,
-  watch,
-} from "vue";
+import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -20,10 +13,12 @@ interface Props {
   options: MarkerOptions;
 }
 
-const slots = useSlots();
 const marker = shallowRef<Marker>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
+const emits = defineEmits<{
+  (e: "click"): void;
+}>();
 
 const renderMarker = () => {
   if (!map) return;
@@ -33,13 +28,11 @@ const renderMarker = () => {
   marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
     props.center
   );
-  const popupEl = slots?.popup()?.[0];
-  console.log(popupEl);
-
-  if (popupEl) {
-    marker.value.setPopup(new mapboxgl.Popup().setHTML(popupEl));
-  }
   marker.value.addTo(map.value);
+};
+
+const onClickEvent = () => {
+  emits("click");
 };
 
 watch(
@@ -113,22 +106,16 @@ watch(
 
 onMounted(() => {
   renderMarker();
+  marker.value?.getElement().addEventListener("click", onClickEvent);
 });
 
 onUnmounted(() => {
-  if (!map || !marker.value) return;
-  marker.value.remove();
+  if (!map) return;
+  if (marker.value) {
+    marker.value.getElement().removeEventListener("click", onClickEvent);
+    marker.value.remove();
+  }
 });
 </script>
 
-<template>
-  <div class="popup">
-    <slot name="popup"></slot>
-  </div>
-</template>
-
-<style scoped>
-.popup {
-  display: none;
-}
-</style>
+<template></template>
