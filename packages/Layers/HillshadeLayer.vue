@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   AnyLayer,
+  EventData,
   HillshadeLayer,
   HillshadeLayout,
   HillshadePaint,
@@ -21,6 +22,13 @@ interface Props {
 const layer = shallowRef<AnyLayer>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
+const emits = defineEmits<{
+  (e: "click", event: EventData): void;
+  (e: "mousemove", event: EventData): void;
+  (e: "mouseenter", event: EventData): void;
+  (e: "mouseover", event: EventData): void;
+  (e: "mouseleave", event: EventData): void;
+}>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
   map?.value.setPaintProperty(props.id, name, value);
@@ -92,6 +100,22 @@ watch(
   }
 );
 
+const onClickEvent = (e: EventData) => {
+  emits("click", e);
+};
+
+const onMouseEnterEvent = (e: EventData) => {
+  emits("mouseenter", e);
+};
+
+const onMouseMoveEvent = (e: EventData) => {
+  emits("mousemove", e);
+};
+
+const onMouseLeaveEvent = (e: EventData) => {
+  emits("mouseleave", e);
+};
+
 onMounted(() => {
   if (map) {
     const options: HillshadeLayer = {
@@ -108,12 +132,20 @@ onMounted(() => {
     }
     map.value.addLayer(options);
     layer.value = map.value.getLayer(props.id);
+    map.value.on("click", props.id, onClickEvent);
+    map.value.on("mouseenter", props.id, onMouseEnterEvent);
+    map.value.on("mousemove", props.id, onMouseMoveEvent);
+    map.value.on("mouseleave", props.id, onMouseLeaveEvent);
   }
 });
 
 onUnmounted(() => {
-  if (layer.value) {
-    map?.value.removeLayer(props.id);
+  if (map && layer.value) {
+    map.value.off("click", props.id, onClickEvent);
+    map.value.off("mouseenter", props.id, onMouseEnterEvent);
+    map.value.off("mousemove", props.id, onMouseMoveEvent);
+    map.value.off("mouseleave", props.id, onMouseLeaveEvent);
+    map.value.removeLayer(props.id);
   }
 });
 </script>
