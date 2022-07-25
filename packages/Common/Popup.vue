@@ -17,6 +17,7 @@ import {
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
+  visible: boolean;
   center: LngLatLike;
   options: PopupOptions;
 }
@@ -25,41 +26,81 @@ const slots = useSlots();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 const popup = shallowRef<Popup>();
+const emits = defineEmits<{
+  (e: "update:visible", visible: boolean): void;
+}>();
+
+const initPopup = () => {
+  if (!map) return;
+  destroyPopup();
+  popup.value = new mapboxgl.Popup(props.options || {})
+    .setLngLat(props.center)
+    .addTo(map.value);
+  renderToString(slots.popup()[0]).then((dom) => {
+    popup.value?.setHTML(dom);
+  });
+  popup.value.on("open", onOpenEvent);
+  popup.value.on("close", onCloseEvent);
+};
+
+const destroyPopup = () => {
+  if (popup.value) {
+    popup.value.off("open", onOpenEvent);
+    popup.value.off("close", onCloseEvent);
+    popup.value.remove();
+  }
+};
+
+watch(
+  () => props.visible,
+  () => {
+    if (props.visible) {
+      initPopup();
+    } else {
+      destroyPopup();
+    }
+  }
+);
 
 watch(
   () => props.center,
   () => {
-    if (map) popup.value?.setLngLat(props.center);
+    if (props.visible) {
+      if (!popup.value) initPopup();
+      else {
+        popup.value.setLngLat(props.center);
+      }
+    }
   }
 );
 
 watch(
   () => props.options?.anchor,
   () => {
-    if (!map || !popup.value) return;
-    popup.value.remove();
-    popup.value = new mapboxgl.Popup(props.options || {}).setLngLat(
-      props.center
-    );
-    popup.value.addTo(map?.value);
+    if (props.visible) initPopup();
   }
 );
 
 watch(
   () => props.options?.offset,
   () => {
-    if (!map) return;
-    popup.value
-      ?.setOffset(props.options?.offset as PointLike)
-      .addTo(map?.value);
+    if (props.visible) {
+      if (!popup.value) initPopup();
+      else if (props.options.offset) {
+        popup.value.setOffset(props.options.offset as PointLike);
+      }
+    }
   }
 );
 
 watch(
   () => props.options?.maxWidth,
-  (maxWidth) => {
-    if (maxWidth && map) {
-      popup.value?.setMaxWidth(maxWidth).addTo(map.value);
+  () => {
+    if (props.visible) {
+      if (!popup.value) initPopup();
+      else if (props.options.maxWidth) {
+        popup.value.setMaxWidth(props.options.maxWidth);
+      }
     }
   }
 );
@@ -68,15 +109,10 @@ watch(
   () => renderToString(slots.popup()[0]),
   async (dom) => {
     const html = await dom;
-    console.log(html, popup.value, map);
     if (map) {
-      if (popup.value) {
-        popup.value.setHTML(html).addTo(map.value);
-      } else {
-        popup.value = new mapboxgl.Popup(props.options || {})
-          .setLngLat(props.center)
-          .setHTML(html)
-          .addTo(map.value);
+      if (!popup.value) initPopup();
+      else {
+        popup.value.setHTML(html);
       }
     }
   },
@@ -85,15 +121,21 @@ watch(
   }
 );
 
+const onOpenEvent = () => {
+  emits("update:visible", true);
+};
+
+const onCloseEvent = () => {
+  emits("update:visible", false);
+  destroyPopup();
+};
+
 onMounted(() => {
-  if (!map) return;
-  popup.value = new mapboxgl.Popup(props.options || {}).setLngLat(props.center);
-  popup.value.setText("sdfsdf").addTo(map.value);
+  initPopup();
 });
 
 onUnmounted(() => {
-  if (!map || !popup.value) return;
-  popup.value.remove();
+  destroyPopup();
 });
 </script>
 
