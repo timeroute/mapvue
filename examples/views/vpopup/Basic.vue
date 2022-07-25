@@ -14,14 +14,20 @@ const data = readonly({
     },
   ],
 });
+
 const state = reactive({
   center: [-77.4144, 25.0759],
   text: "asdfasdf",
+  visible: true,
 });
 
 const handleClick = () => {
-  console.log("click");
   state.text = "I'am a cat";
+  state.visible = true;
+};
+
+const handleMouseEnter = (e) => {
+  console.log(e);
 };
 </script>
 
@@ -47,8 +53,10 @@ const handleClick = () => {
           'circle-radius': 6,
         }"
         @click="handleClick"
+        @mouseenter="handleMouseEnter"
       />
       <v-popup
+        v-model:visible="state.visible"
         :center="state.center"
         :options="{
           anchor: 'bottom',

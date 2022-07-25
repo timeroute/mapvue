@@ -6,6 +6,7 @@ import { accessToken } from "../../utils/mapUtil";
 const state = reactive({
   center: [120, 30],
   draggable: false,
+  visible: true,
   scale: 1,
 });
 
@@ -18,6 +19,23 @@ watch(
 
 const toggleDraggable = () => {
   state.draggable = !state.draggable;
+};
+
+const handleClick = () => {
+  console.log("click");
+  state.visible = true;
+};
+
+const handleMouseEnter = () => {
+  console.log("mouse enter");
+};
+
+const handleMouseMove = () => {
+  console.log("mouse move");
+};
+
+const handleMouseLeave = () => {
+  console.log("mouse leave");
 };
 </script>
 
@@ -36,7 +54,21 @@ const toggleDraggable = () => {
           draggable: state.draggable,
           scale: state.scale,
         }"
+        @click="handleClick"
+        @mouseenter="handleMouseEnter"
+        @mousemove="handleMouseMove"
+        @mouseleave="handleMouseLeave"
       />
+      <v-popup
+        v-model:visible="state.visible"
+        :center="state.center"
+        :options="{
+          anchor: 'bottom',
+          offset: [0, -36],
+        }"
+      >
+        <template #popup> Hi </template>
+      </v-popup>
     </v-map>
     <div class="control">
       <label>toggle draggable</label>
