@@ -32,22 +32,20 @@ const emits = defineEmits<{
 
 const initPopup = () => {
   if (!map) return;
-  destroyPopup();
   popup.value = new mapboxgl.Popup(props.options || {})
     .setLngLat(props.center)
     .addTo(map.value);
   renderToString(slots.popup()[0]).then((dom) => {
     popup.value?.setHTML(dom);
   });
-  popup.value.on("open", onOpenEvent);
   popup.value.on("close", onCloseEvent);
 };
 
 const destroyPopup = () => {
   if (popup.value) {
-    popup.value.off("open", onOpenEvent);
     popup.value.off("close", onCloseEvent);
     popup.value.remove();
+    popup.value = undefined;
   }
 };
 
@@ -65,11 +63,8 @@ watch(
 watch(
   () => props.center,
   () => {
-    if (props.visible) {
-      if (!popup.value) initPopup();
-      else {
-        popup.value.setLngLat(props.center);
-      }
+    if (props.visible && popup.value) {
+      popup.value.setLngLat(props.center);
     }
   }
 );
@@ -77,18 +72,18 @@ watch(
 watch(
   () => props.options?.anchor,
   () => {
-    if (props.visible) initPopup();
+    if (props.visible) {
+      destroyPopup();
+      initPopup();
+    }
   }
 );
 
 watch(
   () => props.options?.offset,
   () => {
-    if (props.visible) {
-      if (!popup.value) initPopup();
-      else if (props.options.offset) {
-        popup.value.setOffset(props.options.offset as PointLike);
-      }
+    if (props.visible && popup.value && props.options.offset) {
+      popup.value.setOffset(props.options.offset as PointLike);
     }
   }
 );
@@ -96,11 +91,8 @@ watch(
 watch(
   () => props.options?.maxWidth,
   () => {
-    if (props.visible) {
-      if (!popup.value) initPopup();
-      else if (props.options.maxWidth) {
-        popup.value.setMaxWidth(props.options.maxWidth);
-      }
+    if (props.visible && popup.value && props.options.maxWidth) {
+      popup.value.setMaxWidth(props.options.maxWidth);
     }
   }
 );
@@ -109,25 +101,17 @@ watch(
   () => renderToString(slots.popup()[0]),
   async (dom) => {
     const html = await dom;
-    if (map) {
-      if (!popup.value) initPopup();
-      else {
-        popup.value.setHTML(html);
-      }
-    }
+    if (!popup.value) initPopup();
+    popup.value.setHTML(html);
   },
   {
     immediate: true,
   }
 );
 
-const onOpenEvent = () => {
-  emits("update:visible", true);
-};
-
 const onCloseEvent = () => {
+  console.log("close event");
   emits("update:visible", false);
-  destroyPopup();
 };
 
 onMounted(() => {

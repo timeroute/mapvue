@@ -17,26 +17,60 @@ const marker = shallowRef<Marker>();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 const emits = defineEmits<{
-  (e: "click"): void;
+  (e: "click", event: Event): void;
+  (e: "mouseenter", event: Event): void;
+  (e: "mousemove", event: Event): void;
+  (e: "mouseleave", event: Event): void;
   (e: "update:center", center: LngLatLike): void;
 }>();
 
 const renderMarker = () => {
   if (!map) return;
-  if (marker.value) {
-    marker.value?.off("dragend", onDragEvent);
-    marker.value.remove();
-  }
+  destroyMarker();
   marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
     props.center
   );
+  const el = marker.value.getElement();
   marker.value.addTo(map.value);
-  marker.value?.getElement().addEventListener("click", onClickEvent);
-  marker.value?.on("dragend", onDragEvent);
+  marker.value.on("dragend", onDragEvent);
+  el.addEventListener("click", onClickEvent);
+  el.addEventListener("mouseenter", onMouseEnterEvent);
+  el.addEventListener("mousemove", onMouseMoveEvent);
+  el.addEventListener("mouseleave", onMouseLeaveEvent);
 };
 
-const onClickEvent = () => {
-  emits("click");
+const destroyMarker = () => {
+  if (marker.value) {
+    const el = marker.value.getElement();
+    marker.value.off("dragend", onDragEvent);
+    el.removeEventListener("click", onClickEvent);
+    el.removeEventListener("mouseenter", onMouseEnterEvent);
+    el.removeEventListener("mousemove", onMouseMoveEvent);
+    el.removeEventListener("mouseleave", onMouseLeaveEvent);
+    marker.value.remove();
+  }
+};
+
+const onClickEvent = (e: Event) => {
+  emits("click", e);
+};
+
+const onMouseEnterEvent = (e: Event) => {
+  emits("mouseenter", e);
+};
+
+const onMouseMoveEvent = (e: Event) => {
+  emits("mousemove", e);
+};
+
+const onMouseLeaveEvent = (e: Event) => {
+  emits("mouseleave", e);
+};
+
+const onDragEvent = () => {
+  if (!marker.value) return;
+  const { lng, lat } = marker.value.getLngLat();
+  emits("update:center", [lng, lat]);
 };
 
 watch(
@@ -108,22 +142,12 @@ watch(
   }
 );
 
-const onDragEvent = (e) => {
-  const { lng, lat } = e.target.getLngLat();
-  emits("update:center", [lng, lat]);
-};
-
 onMounted(() => {
   renderMarker();
 });
 
 onUnmounted(() => {
-  if (!map) return;
-  if (marker.value) {
-    marker.value.off("dragend", onDragEvent);
-    marker.value.getElement().removeEventListener("click", onClickEvent);
-    marker.value.remove();
-  }
+  destroyMarker();
 });
 </script>
 
