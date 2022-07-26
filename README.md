@@ -29,7 +29,7 @@ pnpm add mapbox-gl mapvue
 ```ts
 import { createApp } from "vue";
 import MapVue from "mapvue";
-import "mapvue/dist/style.css";
+import "mapvue/dist/mapvue.css";
 import App from "./App.vue";
 
 createApp(App).use(MapVue).mount("#app");
