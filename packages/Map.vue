@@ -37,58 +37,101 @@ provide(
 watch(
   () => props.options?.center,
   (center) => {
-    if (map.value) {
-      map.value.flyTo({
-        center: center as LngLatLike,
-      });
-    }
+    if (!map.value || !center) return;
+    map.value.flyTo({
+      center: center as LngLatLike,
+    });
   }
 );
 
 watch(
   () => props.options?.zoom,
   (zoom) => {
-    if (map.value) {
-      map.value.flyTo({
-        zoom,
-      });
-    }
+    if (!map.value || zoom !== undefined) return;
+    map.value.flyTo({
+      zoom,
+    });
   }
 );
 
 watch(
   () => props.options?.pitch,
   (pitch) => {
-    if (map.value) {
-      map.value.flyTo({
-        pitch,
-      });
-    }
+    if (!map.value || pitch !== undefined) return;
+    map.value.flyTo({
+      pitch,
+    });
   }
 );
 
 watch(
   () => props.options?.bearing,
   (bearing) => {
-    if (map.value) {
-      map.value.flyTo({
-        bearing,
-      });
-    }
+    if (!map.value || bearing !== undefined) return;
+    map.value.flyTo({
+      bearing,
+    });
+  }
+);
+
+watch(
+  () => props.options?.bounds,
+  (bounds) => {
+    if (!map.value || !bounds) return;
+    map.value.fitBounds(bounds);
+  }
+);
+
+watch(
+  () => props.options?.maxZoom,
+  (maxZoom) => {
+    if (!map.value || maxZoom !== undefined) return;
+    map.value.setMaxZoom(maxZoom);
+  }
+);
+
+watch(
+  () => props.options?.minZoom,
+  (minZoom) => {
+    if (!map.value || minZoom !== undefined) return;
+    map.value.setMinZoom(minZoom);
+  }
+);
+
+watch(
+  () => props.options?.maxBounds,
+  (maxBounds) => {
+    if (!map.value || !maxBounds) return;
+    map.value.setMaxBounds(maxBounds);
+  }
+);
+
+watch(
+  () => props.options?.maxPitch,
+  (maxPitch) => {
+    if (!map.value || maxPitch !== undefined) return;
+    map.value.setMaxPitch(maxPitch);
+  }
+);
+
+watch(
+  () => props.options?.minPitch,
+  (minPitch) => {
+    if (!map.value || minPitch !== undefined) return;
+    map.value.setMinPitch(minPitch);
   }
 );
 
 watch(
   () => props.options?.style,
-  () => {
-    if (!map.value) return;
-    if (!props.options?.style) return;
-    if (props.options.style instanceof Object) {
-      map.value?.setStyle(props.options.style, {
+  (style) => {
+    if (!map.value || !style) return;
+    if (style instanceof Object) {
+      map.value?.setStyle(style, {
         diff: true,
       });
     } else {
-      map.value.setStyle(props.options.style);
+      map.value.setStyle(style);
     }
   }
 );
