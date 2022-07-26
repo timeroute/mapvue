@@ -25,12 +25,11 @@ const updateImage = () => {
   } else if (typeof props.url === "string") {
     map.value.loadImage(props.url, (err, image) => {
       if (err) return;
-      if (image) {
-        if (hasImage) {
-          map.value.updateImage(props.name, image);
-        } else {
-          map.value.addImage(props.name, image);
-        }
+      if (!image) return;
+      if (hasImage) {
+        map.value.updateImage(props.name, image);
+      } else {
+        map.value.addImage(props.name, image);
       }
     });
   }

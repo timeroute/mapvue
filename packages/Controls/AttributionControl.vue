@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import mapboxgl, { IControl } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
+import type { IControl } from "mapbox-gl";
 import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 import { mapvueSymbol } from "../symbols";
 

@@ -7,7 +7,6 @@ import type {
   GeoJSONSourceRaw,
   PromoteIdSpecification,
 } from "mapbox-gl";
-import type { GeoJSON } from "geojson";
 
 interface Props {
   id: string;
@@ -45,53 +44,64 @@ watch(
 );
 
 onMounted(() => {
-  if (map) {
-    const options: GeoJSONSourceRaw = {
-      type: "geojson",
-      data: props.data,
-      buffer: props.buffer ?? 128,
-      cluster: props.cluster || false,
-      generateId: props.generatedId || false,
-      lineMetrics: props.lineMetrics || false,
-      maxzoom: props.maxzoom ?? 18,
-      tolerance: props.tolerance ?? 0.375,
-    };
+  if (!map) return;
+  const options: GeoJSONSourceRaw = {
+    type: "geojson",
+    data: props.data,
+  };
 
-    if (props.filter) {
-      options.filter = props.filter;
-    }
-    if (props.attribution) {
-      options.attribution = props.attribution;
-    }
-    if (props.protomteId) {
-      options.promoteId = props.protomteId;
-    }
-    if (props.cluster) {
-      if (props.clusterMaxZoom) {
-        options.clusterMaxZoom = props.clusterMaxZoom;
-      }
-      if (props.clusterMinPoints) {
-        options.clusterMinPoints = props.clusterMinPoints;
-      }
-      if (props.clusterProperties) {
-        options.clusterProperties = props.clusterProperties;
-      }
-      if (props.clusterRadius) {
-        options.clusterRadius = props.clusterRadius;
-      }
-    }
-    map.value.addSource(props.id, {
-      type: "geojson",
-      data: props.data,
-    });
-    source.value = map.value.getSource(props.id);
+  if (props.buffer !== undefined) {
+    options.buffer = props.buffer;
   }
+
+  if (props.generatedId) {
+    options.generateId = props.generatedId;
+  }
+
+  if (props.lineMetrics) {
+    options.lineMetrics = props.lineMetrics;
+  }
+
+  if (props.maxzoom !== undefined) {
+    options.maxzoom = props.maxzoom;
+  }
+
+  if (props.tolerance !== undefined) {
+    options.tolerance = props.tolerance;
+  }
+
+  if (props.filter) {
+    options.filter = props.filter;
+  }
+  if (props.attribution) {
+    options.attribution = props.attribution;
+  }
+  if (props.protomteId) {
+    options.promoteId = props.protomteId;
+  }
+  if (props.cluster) {
+    options.cluster = props.cluster;
+    if (props.clusterMaxZoom) {
+      options.clusterMaxZoom = props.clusterMaxZoom;
+    }
+    if (props.clusterMinPoints) {
+      options.clusterMinPoints = props.clusterMinPoints;
+    }
+    if (props.clusterProperties) {
+      options.clusterProperties = props.clusterProperties;
+    }
+    if (props.clusterRadius) {
+      options.clusterRadius = props.clusterRadius;
+    }
+  }
+
+  map.value.addSource(props.id, options);
+  source.value = map.value.getSource(props.id);
 });
 
 onUnmounted(() => {
-  if (map && source.value) {
-    map.value.removeSource(props.id);
-  }
+  if (!map || !source.value) return;
+  map.value.removeSource(props.id);
 });
 </script>
 

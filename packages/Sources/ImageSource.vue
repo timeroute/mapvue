@@ -14,12 +14,11 @@ const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 
 const updateImageSource = () => {
-  if (source.value) {
-    (source.value as ImageSource).updateImage({
-      url: props.url,
-      coordinates: props.coordinates,
-    });
-  }
+  if (!source.value) return;
+  (source.value as ImageSource).updateImage({
+    url: props.url,
+    coordinates: props.coordinates,
+  });
 };
 
 watch(() => props.url, updateImageSource);
@@ -27,20 +26,18 @@ watch(() => props.url, updateImageSource);
 watch(() => props.coordinates, updateImageSource);
 
 onMounted(() => {
-  if (map) {
-    map.value.addSource(props.id, {
-      type: "image",
-      url: props.url,
-      coordinates: props.coordinates,
-    });
-    source.value = map.value.getSource(props.id);
-  }
+  if (!map) return;
+  map.value.addSource(props.id, {
+    type: "image",
+    url: props.url,
+    coordinates: props.coordinates,
+  });
+  source.value = map.value.getSource(props.id);
 });
 
 onUnmounted(() => {
-  if (map && source.value) {
-    map.value.removeSource(props.id);
-  }
+  if (!map || !source.value) return;
+  map.value.removeSource(props.id);
 });
 </script>
 

@@ -11,7 +11,6 @@ interface Props {
   id: string;
   url?: string;
   tiles?: string[];
-  tileSize?: 256 | 512;
   promoteId?: PromoteIdSpecification | undefined;
   scheme?: "xyz" | "tms";
   attribution?: string;
@@ -28,8 +27,7 @@ watch(
   () => props.url,
   (url) => {
     if (url) {
-      // update tiles
-      source.value as VectorSource;
+      (source.value as VectorSource).setUrl(url);
     }
   }
 );
@@ -38,46 +36,41 @@ watch(
   () => props.tiles,
   (tiles) => {
     if (tiles && !props.url) {
-      // update tiles
-      source.value as VectorSource;
+      (source.value as VectorSource).setTiles(tiles);
     }
   }
 );
 
 onMounted(() => {
-  if (map) {
-    console.log(map.value, props);
-    const options: VectorSource = {
-      id: props.id,
-      type: "vector",
-      scheme: props.scheme || "xyz",
-      tileSize: props.tileSize || 512,
-      attribution: props.attribution || "",
-      bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
-      minzoom: props.minzoom || 0,
-      maxzoom: props.maxzoom || 22,
-    };
-    if (props.promoteId) {
-      options.promoteId = props.promoteId;
-    }
-    if (props.tiles) {
-      options.tiles = props.tiles;
-    }
-    if (props.url) {
-      delete options.tiles;
-      options.url = props.url;
-    }
-    if (options.url || options.tiles) {
-      map.value.addSource(props.id, options);
-    }
-    source.value = map.value.getSource(props.id);
+  if (!map) return;
+  const options: VectorSource = {
+    id: props.id,
+    type: "vector",
+    scheme: props.scheme || "xyz",
+    attribution: props.attribution || "",
+    bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
+    minzoom: props.minzoom || 0,
+    maxzoom: props.maxzoom || 22,
+  };
+  if (props.promoteId) {
+    options.promoteId = props.promoteId;
   }
+  if (props.tiles) {
+    options.tiles = props.tiles;
+  }
+  if (props.url) {
+    delete options.tiles;
+    options.url = props.url;
+  }
+  if (options.url || options.tiles) {
+    map.value.addSource(props.id, options);
+  }
+  source.value = map.value.getSource(props.id);
 });
 
 onUnmounted(() => {
-  if (source.value) {
-    map?.value.removeSource(props.id);
-  }
+  if (!map || !source.value) return;
+  map.value.removeSource(props.id);
 });
 </script>
 

@@ -22,6 +22,7 @@ import VRasterDemSource from "./Sources/RasterDemSource.vue";
 import VVectorSource from "./Sources/VectorSource.vue";
 import VImageSource from "./Sources/ImageSource.vue";
 import VVideoSource from "./Sources/VideoSource.vue";
+import VCanvasSource from "./Sources/CanvasSource.vue";
 
 const MapVue = {
   install: (app: App<Element>) => {
@@ -48,6 +49,7 @@ const MapVue = {
     app.component("v-rasterdem-source", VRasterDemSource);
     app.component("v-image-source", VImageSource);
     app.component("v-video-source", VVideoSource);
+    app.component("v-canvas-source", VCanvasSource);
   },
 };
 
@@ -68,9 +70,11 @@ export {
   VImageSource,
   VVideoSource,
   VVectorSource,
+  VCanvasSource,
   VSprite,
   VMarker,
   VPopup,
+  VFog,
   VAttributionControl,
   VNavigationControl,
   VScaleControl,

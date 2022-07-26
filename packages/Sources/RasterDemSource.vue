@@ -16,27 +16,24 @@ const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 
 onMounted(() => {
-  if (map) {
-    console.log(map.value, props);
-    map.value.addSource(props.id, {
-      type: "raster-dem",
-      url: props.url,
-      tileSize: props.tileSize || 256,
-      maxzoom: props.maxzoom || 22,
-    });
-    source.value = map.value.getSource(props.id);
-    map.value.setTerrain({
-      source: props.id,
-      exaggeration: props.exaggeration || 1,
-    });
-  }
+  if (!map) return;
+  map.value.addSource(props.id, {
+    type: "raster-dem",
+    url: props.url,
+    tileSize: props.tileSize || 256,
+    maxzoom: props.maxzoom || 22,
+  });
+  source.value = map.value.getSource(props.id);
+  map.value.setTerrain({
+    source: props.id,
+    exaggeration: props.exaggeration || 1,
+  });
 });
 
 onUnmounted(() => {
-  if (source.value) {
-    map?.value.setTerrain();
-    map?.value.removeSource(props.id);
-  }
+  if (!map || !source.value) return;
+  map.value.setTerrain();
+  map.value.removeSource(props.id);
 });
 </script>
 
