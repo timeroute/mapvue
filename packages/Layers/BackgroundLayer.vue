@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { AnyLayer, BackgroundLayout, BackgroundPaint } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
+import type { AnyLayer, BackgroundLayout, BackgroundPaint } from "mapbox-gl";
+import { inject, onMounted, onBeforeUnmount, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
   id: string;
+  sourceLayer?: string;
   paint?: BackgroundPaint;
   layout?: BackgroundLayout;
 }
@@ -14,18 +15,19 @@ const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
-  map?.value.setPaintProperty(props.id, name, value);
+  if (!map) return;
+  map.value.setPaintProperty(props.id, name, value);
 };
 
 const updateLayoutProperty = (name: string, value: unknown) => {
-  map?.value.setLayoutProperty(props.id, name, value);
+  if (!map) return;
+  map.value.setLayoutProperty(props.id, name, value);
 };
 
 watch(
   () => props.paint as BackgroundPaint,
   (cur: BackgroundPaint, prev: BackgroundPaint) => {
-    if (!map) return;
-    if (!layer.value) return;
+    if (!map || !layer.value) return;
     for (const key in cur) {
       if (!prev[key]) {
         updatePaintProperty(key, cur[key]);
@@ -44,8 +46,7 @@ watch(
 watch(
   () => props.layout as BackgroundLayout,
   (cur: BackgroundLayout, prev: BackgroundLayout) => {
-    if (!map) return;
-    if (!layer.value) return;
+    if (!map || !layer.value) return;
     for (const key in cur) {
       if (!prev[key]) {
         updateLayoutProperty(key, cur[key]);
@@ -62,22 +63,22 @@ watch(
 );
 
 onMounted(() => {
-  if (map) {
-    console.log(map.value, props);
-    map.value.addLayer({
-      type: "background",
+  if (!map) return;
+  map.value.addLayer(
+    {
       id: props.id,
+      type: "background",
       paint: props.paint || {},
       layout: props.layout || {},
-    });
-    layer.value = map.value.getLayer(props.id);
-  }
+    },
+    props.sourceLayer
+  );
+  layer.value = map.value.getLayer(props.id);
 });
 
-onUnmounted(() => {
-  if (layer.value) {
-    map?.value.removeLayer(props.id);
-  }
+onBeforeUnmount(() => {
+  if (!map || !layer.value) return;
+  map.value.removeLayer(props.id);
 });
 </script>
 

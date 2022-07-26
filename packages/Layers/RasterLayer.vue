@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {
+import type {
   AnyLayer,
   EventData,
   RasterLayer,
   RasterLayout,
   RasterPaint,
 } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
+import { inject, onBeforeUnmount, onMounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -31,16 +31,17 @@ const emits = defineEmits<{
 }>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
-  map?.value.setPaintProperty(props.id, name, value);
+  if (!map || !layer.value) return;
+  map.value.setPaintProperty(props.id, name, value);
 };
 
 const updateLayoutProperty = (name: string, value: unknown) => {
-  map?.value.setLayoutProperty(props.id, name, value);
+  if (!map || !layer.value) return;
+  map.value.setLayoutProperty(props.id, name, value);
 };
 
 const updateLayoutZoom = () => {
-  if (!map) return;
-  if (!layer.value) return;
+  if (!map || !layer.value) return;
   map.value.setLayerZoomRange(
     props.id,
     props.minzoom ?? 0,
@@ -51,8 +52,7 @@ const updateLayoutZoom = () => {
 watch(
   () => props.paint as RasterPaint,
   (cur: RasterPaint, prev: RasterPaint) => {
-    if (!map) return;
-    if (!layer.value) return;
+    if (!map || !layer.value) return;
     for (const key in cur) {
       if (!prev[key]) {
         updatePaintProperty(key, cur[key]);
@@ -71,8 +71,7 @@ watch(
 watch(
   () => props.layout as RasterLayout,
   (cur: RasterLayout, prev: RasterLayout) => {
-    if (!map) return;
-    if (!layer.value) return;
+    if (!map || !layer.value) return;
     for (const key in cur) {
       if (!prev[key]) {
         updateLayoutProperty(key, cur[key]);
@@ -95,7 +94,7 @@ watch(() => props.maxzoom, updateLayoutZoom);
 watch(
   () => props.filter,
   () => {
-    if (!map) return;
+    if (!map || !layer.value) return;
     map.value.setFilter(props.id, props.filter);
   }
 );
@@ -117,36 +116,34 @@ const onMouseLeaveEvent = (e: EventData) => {
 };
 
 onMounted(() => {
-  if (map) {
-    const options: RasterLayer = {
-      type: "raster",
-      id: props.id,
-      source: props.source,
-      paint: props.paint || {},
-      layout: props.layout || {},
-      minzoom: props.minzoom ?? 0,
-      maxzoom: props.maxzoom ?? 24,
-    };
-    if (props.filter) {
-      options.filter = props.filter;
-    }
-    map.value.addLayer(options);
-    layer.value = map.value.getLayer(props.id);
-    map.value.on("click", props.id, onClickEvent);
-    map.value.on("mouseenter", props.id, onMouseEnterEvent);
-    map.value.on("mousemove", props.id, onMouseMoveEvent);
-    map.value.on("mouseleave", props.id, onMouseLeaveEvent);
+  if (!map) return;
+  const options: RasterLayer = {
+    type: "raster",
+    id: props.id,
+    source: props.source,
+    paint: props.paint || {},
+    layout: props.layout || {},
+    minzoom: props.minzoom ?? 0,
+    maxzoom: props.maxzoom ?? 24,
+  };
+  if (props.filter) {
+    options.filter = props.filter;
   }
+  map.value.addLayer(options);
+  layer.value = map.value.getLayer(props.id);
+  map.value.on("click", props.id, onClickEvent);
+  map.value.on("mouseenter", props.id, onMouseEnterEvent);
+  map.value.on("mousemove", props.id, onMouseMoveEvent);
+  map.value.on("mouseleave", props.id, onMouseLeaveEvent);
 });
 
-onUnmounted(() => {
-  if (map && layer.value) {
-    map.value.off("click", props.id, onClickEvent);
-    map.value.off("mouseenter", props.id, onMouseEnterEvent);
-    map.value.off("mousemove", props.id, onMouseMoveEvent);
-    map.value.off("mouseleave", props.id, onMouseLeaveEvent);
-    map.value.removeLayer(props.id);
-  }
+onBeforeUnmount(() => {
+  if (!map || !layer.value) return;
+  map.value.off("click", props.id, onClickEvent);
+  map.value.off("mouseenter", props.id, onMouseEnterEvent);
+  map.value.off("mousemove", props.id, onMouseMoveEvent);
+  map.value.off("mouseleave", props.id, onMouseLeaveEvent);
+  map.value.removeLayer(props.id);
 });
 </script>
 
