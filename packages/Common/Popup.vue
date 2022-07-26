@@ -1,19 +1,7 @@
 <script setup lang="ts">
-import mapboxgl, {
-  LngLatLike,
-  PointLike,
-  Popup,
-  PopupOptions,
-} from "mapbox-gl";
-import { renderToString } from "vue/server-renderer";
-import {
-  useSlots,
-  inject,
-  onMounted,
-  onUnmounted,
-  shallowRef,
-  watch,
-} from "vue";
+import mapboxgl from "mapbox-gl";
+import type { LngLatLike, PointLike, Popup, PopupOptions } from "mapbox-gl";
+import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -22,40 +10,50 @@ interface Props {
   options: PopupOptions;
 }
 
-const slots = useSlots();
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 const popup = shallowRef<Popup>();
+const observer = shallowRef<MutationObserver>();
 const emits = defineEmits<{
   (e: "update:visible", visible: boolean): void;
 }>();
+const popupRef = ref();
 
-const initPopup = () => {
+const callback = function () {
+  if (props.visible && popup.value) {
+    popup.value.setHTML(popupRef.value.innerHTML);
+  }
+};
+
+const renderPopup = () => {
   if (!map) return;
   popup.value = new mapboxgl.Popup(props.options || {})
     .setLngLat(props.center)
+    .setHTML(popupRef.value.innerHTML)
     .addTo(map.value);
-  renderToString(slots.popup()[0]).then((dom) => {
-    popup.value?.setHTML(dom);
+  observer.value = new MutationObserver(callback);
+  observer.value.observe(popupRef.value, {
+    attributes: true,
+    childList: true,
+    subtree: true,
   });
   popup.value.on("close", onCloseEvent);
 };
 
 const destroyPopup = () => {
   if (popup.value) {
+    if (observer.value) observer.value.disconnect();
     popup.value.off("close", onCloseEvent);
     popup.value.remove();
-    popup.value = undefined;
   }
 };
 
 watch(
   () => props.visible,
   () => {
+    destroyPopup();
     if (props.visible) {
-      initPopup();
-    } else {
-      destroyPopup();
+      renderPopup();
     }
   }
 );
@@ -74,7 +72,7 @@ watch(
   () => {
     if (props.visible) {
       destroyPopup();
-      initPopup();
+      renderPopup();
     }
   }
 );
@@ -97,25 +95,12 @@ watch(
   }
 );
 
-watch(
-  () => renderToString(slots.popup()[0]),
-  async (dom) => {
-    const html = await dom;
-    if (!popup.value) initPopup();
-    popup.value.setHTML(html);
-  },
-  {
-    immediate: true,
-  }
-);
-
 const onCloseEvent = () => {
-  console.log("close event");
   emits("update:visible", false);
 };
 
 onMounted(() => {
-  initPopup();
+  renderPopup();
 });
 
 onUnmounted(() => {
@@ -124,8 +109,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="popup">
-    <slot name="popup"></slot>
+  <div class="popup" ref="popupRef">
+    <slot />
   </div>
 </template>
 
