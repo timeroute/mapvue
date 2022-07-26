@@ -65,12 +65,12 @@ const router = createRouter({
     },
     {
       path: "/vsource/vrastersource/basic",
-      name: "GeoSourcePolygon",
+      name: "RasterSourceBasic",
       component: () => import("./views/vsource/vrastersource/Basic.vue"),
     },
     {
       path: "/vsource/vrasterdemsource/basic",
-      name: "GeoSourcePolygon",
+      name: "RasterDemSourceBasic",
       component: () => import("./views/vsource/vrasterdemsource/Basic.vue"),
     },
     {
@@ -82,6 +82,11 @@ const router = createRouter({
       path: "/vsource/vvideosource/basic",
       name: "VideoSourceBasic",
       component: () => import("./views/vsource/vvideosource/Basic.vue"),
+    },
+    {
+      path: "/vsource/vcanvassource/basic",
+      name: "CanvasSourceBasic",
+      component: () => import("./views/vsource/vcanvassource/Basic.vue"),
     },
     {
       path: "/vsource/vvectorsource/basic",

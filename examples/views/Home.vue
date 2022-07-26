@@ -70,6 +70,10 @@
         <div class="subitem">
           <router-link to="/vsource/vvideosource/basic">Basic</router-link>
         </div>
+        <div class="item">VCanvasSource</div>
+        <div class="subitem">
+          <router-link to="/vsource/vcanvassource/basic">Basic</router-link>
+        </div>
       </section>
       <section>
         <div class="title">图层组件</div>

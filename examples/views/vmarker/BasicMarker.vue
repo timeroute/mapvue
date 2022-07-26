@@ -8,6 +8,7 @@ const state = reactive({
   draggable: false,
   visible: true,
   scale: 1,
+  text: "Hi",
 });
 
 watch(
@@ -22,20 +23,20 @@ const toggleDraggable = () => {
 };
 
 const handleClick = () => {
-  console.log("click");
+  state.text += ", MapVue";
   state.visible = true;
 };
 
 const handleMouseEnter = () => {
-  console.log("mouse enter");
+  state.visible = true;
 };
 
 const handleMouseMove = () => {
-  console.log("mouse move");
+  // console.log("mouse move");
 };
 
 const handleMouseLeave = () => {
-  console.log("mouse leave");
+  state.visible = false;
 };
 </script>
 
@@ -65,9 +66,11 @@ const handleMouseLeave = () => {
         :options="{
           anchor: 'bottom',
           offset: [0, -36],
+          // closeOnClick: false,
+          closeOnMove: false,
         }"
       >
-        <template #popup> Hi </template>
+        {{ state.text }}
       </v-popup>
     </v-map>
     <div class="control">

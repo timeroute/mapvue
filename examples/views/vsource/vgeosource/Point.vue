@@ -20,6 +20,7 @@ import { accessToken } from "../../../utils/mapUtil";
         source="points"
         :paint="{
           'circle-color': '#f00',
+          'circle-radius': 10,
         }"
       />
     </v-map>

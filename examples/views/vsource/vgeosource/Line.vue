@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { Feature } from "geojson";
 import { readonly } from "vue";
 import { accessToken } from "../../../utils/mapUtil";
 
-const line = readonly({
+const line = readonly<Feature>({
   type: "Feature",
   properties: {},
   geometry: {

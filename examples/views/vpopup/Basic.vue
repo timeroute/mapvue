@@ -62,14 +62,11 @@ const handleMouseEnter = (e) => {
           anchor: 'bottom',
           closeButton: true,
           maxWidth: '400px',
-          closeOnClick: false,
         }"
       >
-        <template #popup>
-          <div style="color: red; font-size: 2em">
-            <h2>{{ state.text }}</h2>
-          </div>
-        </template>
+        <div style="color: red; font-size: 2em">
+          <h2>{{ state.text }}</h2>
+        </div>
       </v-popup>
     </v-map>
   </div>
