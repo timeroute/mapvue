@@ -17,7 +17,7 @@ For example, the `v-fill-layer` component actually wraps the `FillLayer` class.
 ## Installation
 
 ```shell
-pnpm add mapvue
+pnpm add mapbox-gl mapvue
 ```
 
 ## Import

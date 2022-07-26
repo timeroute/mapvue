@@ -17,10 +17,11 @@ export default defineConfig({
       fileName: "mapvue",
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "mapbox-gl"],
       output: {
         globals: {
           vue: "Vue",
+          mapboxgl: "mapboxgl",
         },
       },
     },
