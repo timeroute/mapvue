@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import mapboxgl, {
-  LngLatLike,
-  Marker,
-  MarkerOptions,
-  PointLike,
-} from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
+import type { LngLatLike, Marker, MarkerOptions, PointLike } from "mapbox-gl";
 import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
@@ -40,18 +36,18 @@ const renderMarker = () => {
 };
 
 const destroyMarker = () => {
-  if (marker.value) {
-    const el = marker.value.getElement();
-    marker.value.off("dragend", onDragEvent);
-    el.removeEventListener("click", onClickEvent);
-    el.removeEventListener("mouseenter", onMouseEnterEvent);
-    el.removeEventListener("mousemove", onMouseMoveEvent);
-    el.removeEventListener("mouseleave", onMouseLeaveEvent);
-    marker.value.remove();
-  }
+  if (!map || !marker.value) return;
+  const el = marker.value.getElement();
+  marker.value.off("dragend", onDragEvent);
+  el.removeEventListener("click", onClickEvent);
+  el.removeEventListener("mouseenter", onMouseEnterEvent);
+  el.removeEventListener("mousemove", onMouseMoveEvent);
+  el.removeEventListener("mouseleave", onMouseLeaveEvent);
+  marker.value.remove();
 };
 
 const onClickEvent = (e: Event) => {
+  e.stopPropagation();
   emits("click", e);
 };
 
@@ -76,21 +72,24 @@ const onDragEvent = () => {
 watch(
   () => props.center,
   () => {
-    marker.value?.setLngLat(props.center);
+    if (!marker.value) return;
+    marker.value.setLngLat(props.center);
   }
 );
 
 watch(
   () => props.options?.offset,
   () => {
-    marker.value?.setOffset(props.options?.offset as PointLike);
+    if (!marker.value) return;
+    marker.value.setOffset(props.options?.offset as PointLike);
   }
 );
 
 watch(
   () => props.options?.draggable,
   () => {
-    marker.value?.setDraggable(props.options?.draggable || false);
+    if (!marker.value) return;
+    marker.value.setDraggable(props.options?.draggable || false);
   }
 );
 
