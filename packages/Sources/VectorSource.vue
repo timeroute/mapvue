@@ -52,6 +52,7 @@ onMounted(() => {
     bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
     minzoom: props.minzoom || 0,
     maxzoom: props.maxzoom || 22,
+    volatile: props.volatile || false,
   };
   if (props.promoteId) {
     options.promoteId = props.promoteId;
@@ -65,8 +66,8 @@ onMounted(() => {
   }
   if (options.url || options.tiles) {
     map.value.addSource(props.id, options);
+    source.value = map.value.getSource(props.id);
   }
-  source.value = map.value.getSource(props.id);
 });
 
 onUnmounted(() => {

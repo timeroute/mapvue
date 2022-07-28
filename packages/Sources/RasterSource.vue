@@ -70,8 +70,8 @@ onMounted(() => {
   }
   if (options.url || options.tiles) {
     map.value.addSource(props.id, options);
+    source.value = map.value.getSource(props.id);
   }
-  source.value = map.value.getSource(props.id);
 });
 
 onUnmounted(() => {
