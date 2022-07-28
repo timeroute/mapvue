@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { ScaleControl } from "mapbox-gl";
 import type { IControl } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef } from "vue";
+import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
   maxWidth?: number | undefined;
-  unit?: string | undefined;
+  unit?: "imperial" | "metric" | "nautical";
   position:
     | "top-right"
     | "top-left"
@@ -18,6 +18,15 @@ interface Props {
 const control = shallowRef<IControl>();
 const props = defineProps<Props>();
 const map = inject(mapvueSymbol);
+
+watch(
+  () => props.unit,
+  () => {
+    if (props.unit) {
+      (control.value as ScaleControl).setUnit(props.unit);
+    }
+  }
+);
 
 onMounted(() => {
   if (!map) return;

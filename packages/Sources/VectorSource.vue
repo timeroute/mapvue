@@ -17,6 +17,7 @@ interface Props {
   bounds?: number[];
   minzoom?: number;
   maxzoom?: number;
+  volatile?: boolean;
 }
 
 const source = shallowRef<AnySourceImpl>();

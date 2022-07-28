@@ -13,6 +13,7 @@ interface Props {
   bounds?: number[];
   minzoom?: number;
   maxzoom?: number;
+  volatile?: boolean;
 }
 
 const source = shallowRef<AnySourceImpl>();
@@ -58,6 +59,7 @@ onMounted(() => {
     bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
     minzoom: props.minzoom || 0,
     maxzoom: props.maxzoom || 22,
+    volatile: props.volatile || false,
   };
   if (props.tiles) {
     options.tiles = props.tiles;
