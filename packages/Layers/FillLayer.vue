@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as FillPaint,
+  () => ({ ...(props.paint as FillPaint) }),
   (cur: FillPaint, prev: FillPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as FillLayout,
+  () => ({ ...(props.layout as FillLayout) }),
   (cur: FillLayout, prev: FillLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

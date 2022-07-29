@@ -50,7 +50,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as RasterPaint,
+  () => ({ ...(props.paint as RasterPaint) }),
   (cur: RasterPaint, prev: RasterPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -69,7 +69,7 @@ watch(
 );
 
 watch(
-  () => props.layout as RasterLayout,
+  () => ({ ...(props.layout as RasterLayout) }),
   (cur: RasterLayout, prev: RasterLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

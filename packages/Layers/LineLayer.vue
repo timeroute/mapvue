@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as LinePaint,
+  () => ({ ...(props.paint as LinePaint) }),
   (cur: LinePaint, prev: LinePaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as LineLayout,
+  () => ({ ...(props.layout as LineLayout) }),
   (cur: LineLayout, prev: LineLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

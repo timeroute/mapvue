@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as CirclePaint,
+  () => ({ ...(props.paint as CirclePaint) }),
   (cur: CirclePaint, prev: CirclePaint) => {
     if (!map) return;
     if (!layer.value) return;
@@ -71,7 +71,7 @@ watch(
 );
 
 watch(
-  () => props.layout as CircleLayout,
+  () => ({ ...(props.layout as CircleLayout) }),
   (cur: CircleLayout, prev: CircleLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

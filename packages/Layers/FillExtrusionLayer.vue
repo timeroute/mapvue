@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as FillExtrusionPaint,
+  () => ({ ...(props.paint as FillExtrusionPaint) }),
   (cur: FillExtrusionPaint, prev: FillExtrusionPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as FillExtrusionLayout,
+  () => ({ ...(props.layout as FillExtrusionLayout) }),
   (cur: FillExtrusionLayout, prev: FillExtrusionLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

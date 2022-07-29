@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as HillshadePaint,
+  () => ({ ...(props.paint as HillshadePaint) }),
   (cur: HillshadePaint, prev: HillshadePaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as HillshadeLayout,
+  () => ({ ...(props.layout as HillshadeLayout) }),
   (cur: HillshadeLayout, prev: HillshadeLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

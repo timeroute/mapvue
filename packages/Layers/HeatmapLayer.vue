@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as HeatmapPaint,
+  () => ({ ...(props.paint as HeatmapPaint) }),
   (cur: HeatmapPaint, prev: HeatmapPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as HeatmapLayout,
+  () => ({ ...(props.layout as HeatmapLayout) }),
   (cur: HeatmapLayout, prev: HeatmapLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

@@ -16,6 +16,8 @@ const props = defineProps<Props>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map) return;
+  console.log(name, value);
+
   map.value.setPaintProperty(props.id, name, value);
 };
 
@@ -25,7 +27,7 @@ const updateLayoutProperty = (name: string, value: unknown) => {
 };
 
 watch(
-  () => props.paint as BackgroundPaint,
+  () => ({ ...(props.paint as BackgroundPaint) }),
   (cur: BackgroundPaint, prev: BackgroundPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -44,7 +46,7 @@ watch(
 );
 
 watch(
-  () => props.layout as BackgroundLayout,
+  () => ({ ...(props.layout as BackgroundLayout) }),
   (cur: BackgroundLayout, prev: BackgroundLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {

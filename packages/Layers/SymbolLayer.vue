@@ -51,7 +51,7 @@ const updateLayoutZoom = () => {
 };
 
 watch(
-  () => props.paint as SymbolPaint,
+  () => ({ ...(props.paint as SymbolPaint) }),
   (cur: SymbolPaint, prev: SymbolPaint) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
@@ -70,7 +70,7 @@ watch(
 );
 
 watch(
-  () => props.layout as SymbolLayout,
+  () => ({ ...(props.layout as SymbolLayout) }),
   (cur: SymbolLayout, prev: SymbolLayout) => {
     if (!map || !layer.value) return;
     for (const key in cur) {
