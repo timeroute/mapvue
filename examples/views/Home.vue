@@ -78,6 +78,9 @@
       <section>
         <div class="title">图层组件</div>
         <div class="item">VBackgroundLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vbackgroundlayer/basic">Basic</router-link>
+        </div>
         <div class="item">VCircleLayer</div>
         <div class="item">VFillLayer</div>
         <div class="item">VFillExtrusionLayer</div>

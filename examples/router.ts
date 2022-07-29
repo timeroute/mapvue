@@ -94,6 +94,11 @@ const router = createRouter({
       component: () => import("./views/vsource/vvectorsource/Basic.vue"),
     },
     {
+      path: "/vlayer/vbackgroundlayer/basic",
+      name: "BackgroundLayerBasic",
+      component: () => import("./views/vlayer/vbackgroundlayer/Basic.vue"),
+    },
+    {
       path: "/vlayer/vhillshadelayer/basic",
       name: "HillshadeLayerBasic",
       component: () => import("./views/vlayer/vhillshadelayer/Basic.vue"),
