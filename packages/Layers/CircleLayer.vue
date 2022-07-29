@@ -27,7 +27,6 @@ const emits = defineEmits<{
   (e: "click", event: EventData): void;
   (e: "mousemove", event: EventData): void;
   (e: "mouseenter", event: EventData): void;
-  (e: "mouseover", event: EventData): void;
   (e: "mouseleave", event: EventData): void;
 }>();
 
@@ -67,6 +66,9 @@ watch(
       if (cur[key]) continue;
       updatePaintProperty(key, undefined);
     }
+  },
+  {
+    deep: false,
   }
 );
 
@@ -86,6 +88,9 @@ watch(
       if (cur[key]) continue;
       updateLayoutProperty(key, undefined);
     }
+  },
+  {
+    deep: false,
   }
 );
 

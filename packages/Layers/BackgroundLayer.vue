@@ -16,8 +16,6 @@ const props = defineProps<Props>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map) return;
-  console.log(name, value);
-
   map.value.setPaintProperty(props.id, name, value);
 };
 
@@ -42,6 +40,9 @@ watch(
       if (cur[key]) continue;
       updatePaintProperty(key, undefined);
     }
+  },
+  {
+    deep: false,
   }
 );
 
@@ -61,6 +62,9 @@ watch(
       if (cur[key]) continue;
       updateLayoutProperty(key, undefined);
     }
+  },
+  {
+    deep: false,
   }
 );
 
