@@ -6,8 +6,9 @@ const colors = ["#f00", "#00f", "#ff0", "#0f0", "#0ff", "#fff", "#888"];
 
 const state = reactive({
   paint: {
-    "background-color": "#f00",
-    "background-opacity": 1,
+    "circle-color": "#f00",
+    "circle-opacity": 1,
+    "circle-radius": 10,
   },
   layout: {
     visibility: "visible",
@@ -15,7 +16,7 @@ const state = reactive({
 });
 
 const handleChangeBg = () => {
-  state.paint["background-color"] =
+  state.paint["circle-color"] =
     colors[Math.floor(Math.random() * colors.length)];
 };
 </script>
@@ -25,13 +26,17 @@ const handleChangeBg = () => {
     <v-map
       :accessToken="accessToken"
       :options="{
-        center: [-119.5591, 37.715],
-        zoom: 9,
+        center: [-68.137343, 45.137451],
+        zoom: 5,
       }"
     >
-      <v-background-layer
-        id="bg"
-        sourceLayer="water"
+      <v-geo-source
+        id="geo"
+        data="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_ports.geojson"
+      />
+      <v-circle-layer
+        id="circle"
+        source="geo"
         :paint="state.paint"
         :layout="state.layout"
       />
@@ -40,12 +45,20 @@ const handleChangeBg = () => {
       <button @click="handleChangeBg">切换背景色</button>
       <input
         type="number"
+        :min="0"
         :max="1"
         :step="0.1"
-        v-model="state.paint['background-opacity']"
+        v-model="state.paint['circle-opacity']"
       />
       <button @click="state.layout.visibility = 'visible'">显示</button>
       <button @click="state.layout.visibility = 'none'">隐藏</button>
+      <input
+        type="number"
+        :min="10"
+        :max="20"
+        :step="1"
+        v-model="state.paint['circle-radius']"
+      />
     </div>
   </div>
 </template>

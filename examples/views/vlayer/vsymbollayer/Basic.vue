@@ -2,22 +2,14 @@
 import { reactive } from "vue";
 import { accessToken } from "../../../utils/mapUtil";
 
-const colors = ["#f00", "#00f", "#ff0", "#0f0", "#0ff", "#fff", "#888"];
-
 const state = reactive({
-  paint: {
-    "background-color": "#f00",
-    "background-opacity": 1,
-  },
+  paint: {},
   layout: {
+    "icon-image": "cat",
+    "icon-size": 1,
     visibility: "visible",
   },
 });
-
-const handleChangeBg = () => {
-  state.paint["background-color"] =
-    colors[Math.floor(Math.random() * colors.length)];
-};
 </script>
 
 <template>
@@ -25,24 +17,32 @@ const handleChangeBg = () => {
     <v-map
       :accessToken="accessToken"
       :options="{
-        center: [-119.5591, 37.715],
-        zoom: 9,
+        center: [-68.137343, 45.137451],
+        zoom: 5,
       }"
     >
-      <v-background-layer
-        id="bg"
-        sourceLayer="water"
+      <v-sprite
+        name="cat"
+        url="https://docs.mapbox.com/mapbox-gl-js/assets/cat.png"
+      />
+      <v-geo-source
+        id="geo"
+        data="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_ports.geojson"
+      />
+      <v-symbol-layer
+        id="symbol"
+        source="geo"
         :paint="state.paint"
         :layout="state.layout"
       />
     </v-map>
     <div class="control">
-      <button @click="handleChangeBg">切换背景色</button>
       <input
         type="number"
+        :min="0"
         :max="1"
         :step="0.1"
-        v-model="state.paint['background-opacity']"
+        v-model="state.layout['icon-size']"
       />
       <button @click="state.layout.visibility = 'visible'">显示</button>
       <button @click="state.layout.visibility = 'none'">隐藏</button>

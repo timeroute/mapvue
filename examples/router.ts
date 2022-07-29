@@ -103,6 +103,41 @@ const router = createRouter({
       name: "HillshadeLayerBasic",
       component: () => import("./views/vlayer/vhillshadelayer/Basic.vue"),
     },
+    {
+      path: "/vlayer/vfilllayer/basic",
+      name: "FillLayerBasic",
+      component: () => import("./views/vlayer/vfilllayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vfillextrusionlayer/basic",
+      name: "FillExtrusionLayerBasic",
+      component: () => import("./views/vlayer/vfillextrusionlayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vlinelayer/basic",
+      name: "LineLayerBasic",
+      component: () => import("./views/vlayer/vlinelayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vcirclelayer/basic",
+      name: "CircleLayerBasic",
+      component: () => import("./views/vlayer/vcirclelayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vheatmaplayer/basic",
+      name: "HeatmapLayerBasic",
+      component: () => import("./views/vlayer/vheatmaplayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vrasterlayer/basic",
+      name: "RasterLayerBasic",
+      component: () => import("./views/vlayer/vrasterlayer/Basic.vue"),
+    },
+    {
+      path: "/vlayer/vsymbollayer/basic",
+      name: "SymbolLayerBasic",
+      component: () => import("./views/vlayer/vsymbollayer/Basic.vue"),
+    },
   ],
 });
 

@@ -82,12 +82,35 @@
           <router-link to="/vlayer/vbackgroundlayer/basic">Basic</router-link>
         </div>
         <div class="item">VCircleLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vcirclelayer/basic">Basic</router-link>
+        </div>
         <div class="item">VFillLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vfilllayer/basic">Basic</router-link>
+        </div>
         <div class="item">VFillExtrusionLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vfillextrusionlayer/basic">
+            Basic
+          </router-link>
+        </div>
         <div class="item">VHeatmapLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vheatmaplayer/basic">Basic</router-link>
+        </div>
         <div class="item">VLineLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vlinelayer/basic">Basic</router-link>
+        </div>
         <div class="item">VRasterLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vrasterlayer/basic">Basic</router-link>
+        </div>
         <div class="item">VSymbolLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vsymbollayer/basic">Basic</router-link>
+        </div>
         <div class="item">VHillShade</div>
         <div class="subitem">
           <router-link to="/vlayer/vhillshadelayer/basic">Basic</router-link>
