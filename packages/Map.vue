@@ -47,7 +47,7 @@ watch(
 watch(
   () => props.options?.zoom,
   (zoom) => {
-    if (!map.value || zoom !== undefined) return;
+    if (!map.value || zoom === undefined) return;
     map.value.flyTo({
       zoom,
     });
@@ -57,7 +57,7 @@ watch(
 watch(
   () => props.options?.pitch,
   (pitch) => {
-    if (!map.value || pitch !== undefined) return;
+    if (!map.value || pitch === undefined) return;
     map.value.flyTo({
       pitch,
     });
@@ -67,7 +67,7 @@ watch(
 watch(
   () => props.options?.bearing,
   (bearing) => {
-    if (!map.value || bearing !== undefined) return;
+    if (!map.value || bearing === undefined) return;
     map.value.flyTo({
       bearing,
     });
@@ -85,7 +85,7 @@ watch(
 watch(
   () => props.options?.maxZoom,
   (maxZoom) => {
-    if (!map.value || maxZoom !== undefined) return;
+    if (!map.value || maxZoom === undefined) return;
     map.value.setMaxZoom(maxZoom);
   }
 );
@@ -93,7 +93,7 @@ watch(
 watch(
   () => props.options?.minZoom,
   (minZoom) => {
-    if (!map.value || minZoom !== undefined) return;
+    if (!map.value || minZoom === undefined) return;
     map.value.setMinZoom(minZoom);
   }
 );
@@ -109,7 +109,7 @@ watch(
 watch(
   () => props.options?.maxPitch,
   (maxPitch) => {
-    if (!map.value || maxPitch !== undefined) return;
+    if (!map.value || maxPitch === undefined) return;
     map.value.setMaxPitch(maxPitch);
   }
 );
@@ -117,7 +117,7 @@ watch(
 watch(
   () => props.options?.minPitch,
   (minPitch) => {
-    if (!map.value || minPitch !== undefined) return;
+    if (!map.value || minPitch === undefined) return;
     map.value.setMinPitch(minPitch);
   }
 );

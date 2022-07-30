@@ -1,0 +1,42 @@
+### 2022-07-30
+
+1. Fixed watch map's props.
+
+### 2022-07-29
+
+1. Add deep: false to watch for layers
+2. Fixed watch layer props
+
+### 2022-07-28
+
+1. Update Fog props
+2. Update props of sources and controls
+
+### 2022-07-26
+
+1. Remove mapboxgl lib when build
+2. Add canvas source and Optimize code
+3. Use before unmount to prevent remove source first
+4. Fixed event in Marker
+5. Add watching some props
+6. Replace renderToString to MutationObserver
+
+### 2022-07-25
+
+1. Fixed Marker and Popup
+
+### 2022-07-24
+
+1. Fixed watch popup slot and control props
+2. Add VFog components
+3. Add events for layers
+
+### 2022-07-23
+
+1. Add watch scale, color, anchor prop in VMarker
+2. First set accessToken to map
+3. Fixed export css
+
+### 2022-07-22
+
+1. Init
