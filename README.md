@@ -4,7 +4,9 @@
   <a href="https://npmjs.com/package/mapvue"><img src="https://img.shields.io/npm/v/mapvue.svg" alt="npm package"></a>
 </p>
 
-> The library is in developing, not recommended using in production.
+> The library is in developing, although basic development is complete, it is still not recommended for use in production environments.
+
+English ｜ [中文](./README_CN.md)
 
 A well-packaged MapboxGL component library
 
@@ -20,7 +22,16 @@ For example, the `v-fill-layer` component actually wraps the `FillLayer` class.
 
 ## Installation
 
+Although based on MapboxGL, the component library does not integrate 'mapbox-gl' into a bundle and needs to be installed separately.
+
 ```shell
+# use npm
+npm install mapbox-gl mapvue
+
+# use yarn
+yarn add mapbox-gl mapvue
+
+# use pnpm
 pnpm add mapbox-gl mapvue
 ```
 
