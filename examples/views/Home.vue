@@ -9,7 +9,7 @@
         <div class="item">VMap</div>
         <div class="subitem">
           <router-link to="/vmap/basic">Basic VMap</router-link>
-          <router-link to="/vmap/event">With Event</router-link>
+          <router-link to="/vmap/flyzoom">Fly and Zoom</router-link>
         </div>
       </section>
       <section>

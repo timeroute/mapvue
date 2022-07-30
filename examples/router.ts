@@ -14,9 +14,9 @@ const router = createRouter({
       component: () => import("./views/vmap/BasicMap.vue"),
     },
     {
-      path: "/vmap/event",
-      name: "VMapWithEvent",
-      component: () => import("./views/vmap/WithEvent.vue"),
+      path: "/vmap/flyzoom",
+      name: "VMapFlyZoom",
+      component: () => import("./views/vmap/FlyZoom.vue"),
     },
     {
       path: "/vmarker/basic",
