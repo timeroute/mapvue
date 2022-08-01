@@ -23,6 +23,7 @@ import VVectorSource from "./Sources/VectorSource.vue";
 import VImageSource from "./Sources/ImageSource.vue";
 import VVideoSource from "./Sources/VideoSource.vue";
 import VCanvasSource from "./Sources/CanvasSource.vue";
+import { mapvueSymbol } from "./symbols";
 
 const MapVue = {
   install: (app: App<Element>) => {
@@ -78,6 +79,7 @@ export {
   VAttributionControl,
   VNavigationControl,
   VScaleControl,
+  mapvueSymbol,
 };
 
 export default MapVue;
