@@ -15,7 +15,7 @@ import { mapvueSymbol } from "./symbols";
 
 interface Props {
   accessToken: string;
-  options?: MapboxOptions;
+  options: MapboxOptions;
 }
 
 const props = defineProps<Props>();
@@ -140,13 +140,7 @@ onMounted(() => {
   if (mapRef.value) {
     map.value = new Map({
       container: mapRef.value,
-      attributionControl: props.options?.attributionControl || true,
-      antialias: props.options?.antialias || false,
-      center: props.options?.center || ([120, 30] as mapboxgl.LngLatLike),
-      zoom: props.options?.zoom || 2,
-      style: props.options?.style || "mapbox://style/mapbox/streets-v11",
-      bearing: props.options?.bearing || 0,
-      pitch: props.options?.pitch || 0,
+      ...props.options,
     });
     map.value.on("load", () => {
       emits("loaded");
