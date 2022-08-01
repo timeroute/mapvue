@@ -140,6 +140,9 @@ onMounted(() => {
   if (mapRef.value) {
     map.value = new Map({
       container: mapRef.value,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [120, 30],
+      zoom: 2,
       ...props.options,
     });
     map.value.on("load", () => {

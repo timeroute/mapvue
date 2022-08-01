@@ -6,8 +6,8 @@ import { mapvueSymbol } from "../symbols";
 
 interface Props {
   visible: boolean;
-  center: LngLatLike;
-  options: PopupOptions;
+  center?: LngLatLike | undefined;
+  options?: PopupOptions;
 }
 
 const map = inject(mapvueSymbol);
@@ -27,6 +27,8 @@ const callback = function () {
 
 const renderPopup = () => {
   if (!map) return;
+  if (!props.center) return;
+  if (!props.visible) return;
   popup.value = new mapboxgl.Popup(props.options || {})
     .setLngLat(props.center)
     .setHTML(popupRef.value.innerHTML)
@@ -61,8 +63,11 @@ watch(
 watch(
   () => props.center,
   () => {
-    if (props.visible && popup.value) {
+    if (!popup.value || !props.visible) return;
+    if (props.center) {
       popup.value.setLngLat(props.center);
+    } else {
+      destroyPopup();
     }
   }
 );
@@ -70,27 +75,28 @@ watch(
 watch(
   () => props.options?.anchor,
   () => {
-    if (props.visible) {
-      destroyPopup();
-      renderPopup();
-    }
+    if (!popup.value || !props.visible) return;
+    destroyPopup();
+    renderPopup();
   }
 );
 
 watch(
   () => props.options?.offset,
-  () => {
-    if (props.visible && popup.value && props.options.offset) {
-      popup.value.setOffset(props.options.offset as PointLike);
+  (offset) => {
+    if (!popup.value || !props.visible) return;
+    if (offset) {
+      popup.value.setOffset(offset as PointLike);
     }
   }
 );
 
 watch(
   () => props.options?.maxWidth,
-  () => {
-    if (props.visible && popup.value && props.options.maxWidth) {
-      popup.value.setMaxWidth(props.options.maxWidth);
+  (maxWidth) => {
+    if (!popup.value || !props.visible) return;
+    if (maxWidth) {
+      popup.value.setMaxWidth(maxWidth);
     }
   }
 );

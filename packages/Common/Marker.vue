@@ -5,8 +5,8 @@ import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
-  center: LngLatLike;
-  options: MarkerOptions;
+  center?: LngLatLike | undefined;
+  options?: MarkerOptions;
 }
 
 const marker = shallowRef<Marker>();
@@ -21,8 +21,7 @@ const emits = defineEmits<{
 }>();
 
 const renderMarker = () => {
-  if (!map) return;
-  destroyMarker();
+  if (!map || !props.center) return;
   marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
     props.center
   );
@@ -44,6 +43,7 @@ const destroyMarker = () => {
   el.removeEventListener("mousemove", onMouseMoveEvent);
   el.removeEventListener("mouseleave", onMouseLeaveEvent);
   marker.value.remove();
+  marker.value = undefined;
 };
 
 const onClickEvent = (e: Event) => {
@@ -72,30 +72,39 @@ const onDragEvent = () => {
 watch(
   () => props.center,
   () => {
-    if (!marker.value) return;
-    marker.value.setLngLat(props.center);
+    if (props.center) {
+      if (marker.value) {
+        marker.value.setLngLat(props.center);
+      } else {
+        renderMarker();
+      }
+    } else {
+      destroyMarker();
+    }
   }
 );
 
 watch(
   () => props.options?.offset,
-  () => {
-    if (!marker.value) return;
-    marker.value.setOffset(props.options?.offset as PointLike);
+  (offset) => {
+    if (!marker.value || !offset) return;
+    marker.value.setOffset(offset as PointLike);
   }
 );
 
 watch(
   () => props.options?.draggable,
-  () => {
-    if (!marker.value) return;
-    marker.value.setDraggable(props.options?.draggable || false);
+  (draggable) => {
+    if (!marker.value || draggable === undefined) return;
+    marker.value.setDraggable(draggable);
   }
 );
 
 watch(
   () => props.options?.scale,
   () => {
+    if (!marker.value) return;
+    destroyMarker();
     renderMarker();
   }
 );
@@ -103,15 +112,16 @@ watch(
 watch(
   () => props.options?.rotation,
   (rotation) => {
-    if (rotation) {
-      marker.value?.setRotation(rotation);
-    }
+    if (!marker.value || rotation === undefined) return;
+    marker.value.setRotation(rotation);
   }
 );
 
 watch(
   () => props.options?.color,
   () => {
+    if (!marker.value) return;
+    destroyMarker();
     renderMarker();
   }
 );
@@ -119,6 +129,8 @@ watch(
 watch(
   () => props.options?.anchor,
   () => {
+    if (!marker.value) return;
+    destroyMarker();
     renderMarker();
   }
 );
@@ -126,9 +138,8 @@ watch(
 watch(
   () => props.options?.rotationAlignment,
   (rotationAlignment) => {
-    if (rotationAlignment) {
-      marker.value?.setRotationAlignment(rotationAlignment);
-    }
+    if (!marker.value || !rotationAlignment) return;
+    marker.value.setRotationAlignment(rotationAlignment);
   }
 );
 
