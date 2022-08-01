@@ -7,6 +7,7 @@ import type {
   SymbolPaint,
 } from "mapbox-gl";
 import { inject, onBeforeUnmount, onMounted, shallowRef, watch } from "vue";
+import { useLayerEvent } from "../composables/layer_event";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
@@ -29,6 +30,19 @@ const emits = defineEmits<{
   (e: "mouseenter", event: EventData): void;
   (e: "mouseleave", event: EventData): void;
 }>();
+
+useLayerEvent(map.value, "click", props.id, (e) => {
+  emits("click", e);
+});
+useLayerEvent(map.value, "mouseenter", props.id, (e) => {
+  emits("mouseenter", e);
+});
+useLayerEvent(map.value, "mousemove", props.id, (e) => {
+  emits("mousemove", e);
+});
+useLayerEvent(map.value, "mouseleave", props.id, (e) => {
+  emits("mouseleave", e);
+});
 
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map || !layer.value) return;
@@ -105,22 +119,6 @@ watch(
   }
 );
 
-const onClickEvent = (e: EventData) => {
-  emits("click", e);
-};
-
-const onMouseEnterEvent = (e: EventData) => {
-  emits("mouseenter", e);
-};
-
-const onMouseMoveEvent = (e: EventData) => {
-  emits("mousemove", e);
-};
-
-const onMouseLeaveEvent = (e: EventData) => {
-  emits("mouseleave", e);
-};
-
 onMounted(() => {
   if (!map) return;
   const options: SymbolLayer = {
@@ -140,18 +138,10 @@ onMounted(() => {
   }
   map.value.addLayer(options);
   layer.value = map.value.getLayer(props.id);
-  map.value.on("click", props.id, onClickEvent);
-  map.value.on("mouseenter", props.id, onMouseEnterEvent);
-  map.value.on("mousemove", props.id, onMouseMoveEvent);
-  map.value.on("mouseleave", props.id, onMouseLeaveEvent);
 });
 
 onBeforeUnmount(() => {
   if (!map || !layer.value) return;
-  map.value.off("click", props.id, onClickEvent);
-  map.value.off("mouseenter", props.id, onMouseEnterEvent);
-  map.value.off("mousemove", props.id, onMouseMoveEvent);
-  map.value.off("mouseleave", props.id, onMouseLeaveEvent);
   map.value.removeLayer(props.id);
 });
 </script>

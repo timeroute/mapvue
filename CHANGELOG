@@ -4,6 +4,7 @@
 2. Fixed the bugs of VMarker and VPopup
 3. Expose map variable to outter VMap components
 4. Export mapvueSymbol for inject map in custom component
+5. Add useLayerEvent for layers
 
 ### 2022-07-30
 
