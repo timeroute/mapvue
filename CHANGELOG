@@ -2,6 +2,7 @@
 
 1. Fixed init VMap component's props
 2. Fixed the bugs of VMarker and VPopup
+3. Expose map variable to outter VMap components
 
 ### 2022-07-30
 

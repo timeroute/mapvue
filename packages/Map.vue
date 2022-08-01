@@ -28,11 +28,13 @@ mapboxgl.accessToken = props.accessToken;
 const mapRef = shallowRef<HTMLElement>();
 const map = shallowRef<Map>();
 const loaded = ref<boolean>(false);
+const _map = computed(() => map.value);
 
-provide(
-  mapvueSymbol,
-  computed(() => map.value)
-);
+defineExpose({
+  map: _map,
+});
+
+provide(mapvueSymbol, _map);
 
 watch(
   () => props.options?.center,
