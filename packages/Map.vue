@@ -8,7 +8,8 @@ import {
   shallowRef,
   watch,
 } from "vue";
-import mapboxgl, { Map, LngLatLike } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
+import type { Map, LngLatLike } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { mapvueSymbol } from "./symbols";
 import type { MapboxOptions } from "./map";
@@ -140,7 +141,7 @@ watch(
 
 onMounted(() => {
   if (mapRef.value) {
-    map.value = new Map({
+    map.value = new mapboxgl.Map({
       container: mapRef.value,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [120, 30],

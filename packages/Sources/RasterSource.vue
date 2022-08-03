@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
-import type { AnySourceImpl, RasterSource, Style } from "mapbox-gl";
+import type { AnySourceImpl, RasterSource } from "mapbox-gl";
 
 interface Props {
   id: string;
@@ -13,7 +13,7 @@ interface Props {
   bounds?: number[];
   minzoom?: number;
   maxzoom?: number;
-  volatile?: boolean;
+  // volatile?: boolean;
 }
 
 const source = shallowRef<AnySourceImpl>();
@@ -22,8 +22,14 @@ const props = defineProps<Props>();
 
 const triggerRepaint = () => {
   if (!map) return;
-  (map.value.style as Style)._sourceCaches[`other:${props.id}`].clearTiles();
-  (map.value.style as Style)._sourceCaches[`other:${props.id}`].update(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  map.value.style._sourceCaches[`other:${props.id}`].clearTiles();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  map.value.style._sourceCaches[`other:${props.id}`].update(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     map.value.transform
   );
   map.value.triggerRepaint();
@@ -59,7 +65,6 @@ onMounted(() => {
     bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
     minzoom: props.minzoom || 0,
     maxzoom: props.maxzoom || 22,
-    volatile: props.volatile || false,
   };
   if (props.tiles) {
     options.tiles = props.tiles;

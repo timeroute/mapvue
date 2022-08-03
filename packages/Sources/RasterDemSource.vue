@@ -31,7 +31,7 @@ onMounted(() => {
     bounds: props.bounds || [-180, -85.051129, 180, 85.051129],
     minzoom: props.minzoom || 0,
     maxzoom: props.maxzoom || 22,
-    volatile: props.volatile || false,
+    // volatile: props.volatile || false,
   };
   if (props.tiles) {
     options.tiles = props.tiles;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
-import type { AnySourceImpl, VideoSource } from "mapbox-gl";
+import type { AnySourceImpl, CanvasSource, VideoSource } from "mapbox-gl";
 
 interface Props {
   id: string;
@@ -25,9 +25,9 @@ watch(
   () => props.playing,
   () => {
     if (props.playing) {
-      (source.value as VideoSource).play();
+      (source.value as CanvasSource).play();
     } else {
-      (source.value as VideoSource).pause();
+      (source.value as CanvasSource).pause();
     }
   }
 );

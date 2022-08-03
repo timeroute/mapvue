@@ -2,6 +2,7 @@
 import type { AnyLayer, BackgroundLayout, BackgroundPaint } from "mapbox-gl";
 import { inject, onMounted, onBeforeUnmount, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
+import { diffObject } from "../utils";
 
 interface Props {
   id: string;
@@ -27,19 +28,7 @@ const updateLayoutProperty = (name: string, value: unknown) => {
 watch(
   () => ({ ...(props.paint as BackgroundPaint) }),
   (cur: BackgroundPaint, prev: BackgroundPaint) => {
-    if (!map || !layer.value) return;
-    for (const key in cur) {
-      if (!prev[key]) {
-        updatePaintProperty(key, cur[key]);
-        continue;
-      }
-      if (cur[key] === prev[key]) continue;
-      updatePaintProperty(key, cur[key]);
-    }
-    for (const key in prev) {
-      if (cur[key]) continue;
-      updatePaintProperty(key, undefined);
-    }
+    diffObject(cur, prev, updatePaintProperty);
   },
   {
     deep: false,
@@ -49,19 +38,7 @@ watch(
 watch(
   () => ({ ...(props.layout as BackgroundLayout) }),
   (cur: BackgroundLayout, prev: BackgroundLayout) => {
-    if (!map || !layer.value) return;
-    for (const key in cur) {
-      if (!prev[key]) {
-        updateLayoutProperty(key, cur[key]);
-        continue;
-      }
-      if (cur[key] === prev[key]) continue;
-      updateLayoutProperty(key, cur[key]);
-    }
-    for (const key in prev) {
-      if (cur[key]) continue;
-      updateLayoutProperty(key, undefined);
-    }
+    diffObject(cur, prev, updateLayoutProperty);
   },
   {
     deep: false,

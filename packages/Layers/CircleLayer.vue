@@ -9,6 +9,7 @@ import type {
 import { inject, onMounted, onBeforeUnmount, shallowRef, watch } from "vue";
 import { useLayerEvent } from "../composables/layer_event";
 import { mapvueSymbol } from "../symbols";
+import { diffObject } from "../utils";
 
 interface Props {
   id: string;
@@ -30,19 +31,6 @@ const emits = defineEmits<{
   (e: "mouseenter", event: EventData): void;
   (e: "mouseleave", event: EventData): void;
 }>();
-
-useLayerEvent(map.value, "click", props.id, (e) => {
-  emits("click", e);
-});
-useLayerEvent(map.value, "mouseenter", props.id, (e) => {
-  emits("mouseenter", e);
-});
-useLayerEvent(map.value, "mousemove", props.id, (e) => {
-  emits("mousemove", e);
-});
-useLayerEvent(map.value, "mouseleave", props.id, (e) => {
-  emits("mouseleave", e);
-});
 
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map || !layer.value) return;
@@ -66,20 +54,7 @@ const updateLayoutZoom = () => {
 watch(
   () => ({ ...(props.paint as CirclePaint) }),
   (cur: CirclePaint, prev: CirclePaint) => {
-    if (!map) return;
-    if (!layer.value) return;
-    for (const key in cur) {
-      if (!prev[key]) {
-        updatePaintProperty(key, cur[key]);
-        continue;
-      }
-      if (cur[key] === prev[key]) continue;
-      updatePaintProperty(key, cur[key]);
-    }
-    for (const key in prev) {
-      if (cur[key]) continue;
-      updatePaintProperty(key, undefined);
-    }
+    diffObject(cur, prev, updatePaintProperty);
   },
   {
     deep: false,
@@ -89,19 +64,7 @@ watch(
 watch(
   () => ({ ...(props.layout as CircleLayout) }),
   (cur: CircleLayout, prev: CircleLayout) => {
-    if (!map || !layer.value) return;
-    for (const key in cur) {
-      if (!prev[key]) {
-        updateLayoutProperty(key, cur[key]);
-        continue;
-      }
-      if (cur[key] === prev[key]) continue;
-      updateLayoutProperty(key, cur[key]);
-    }
-    for (const key in prev) {
-      if (cur[key]) continue;
-      updateLayoutProperty(key, undefined);
-    }
+    diffObject(cur, prev, updateLayoutProperty);
   },
   {
     deep: false,
@@ -138,6 +101,20 @@ onMounted(() => {
     options["source-layer"] = props.sourceLayer;
   }
   map.value.addLayer(options);
+
+  useLayerEvent(map.value, "click", props.id, (e) => {
+    emits("click", e);
+  });
+  useLayerEvent(map.value, "mouseenter", props.id, (e) => {
+    emits("mouseenter", e);
+  });
+  useLayerEvent(map.value, "mousemove", props.id, (e) => {
+    emits("mousemove", e);
+  });
+  useLayerEvent(map.value, "mouseleave", props.id, (e) => {
+    emits("mouseleave", e);
+  });
+
   layer.value = map.value.getLayer(props.id);
 });
 
