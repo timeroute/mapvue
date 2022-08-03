@@ -9,9 +9,9 @@ import {
   watch,
 } from "vue";
 import mapboxgl, { Map, LngLatLike } from "mapbox-gl";
-import type { MapboxOptions } from "./types";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { mapvueSymbol } from "./symbols";
+import type { MapboxOptions } from "./map";
 
 interface Props {
   accessToken: string;

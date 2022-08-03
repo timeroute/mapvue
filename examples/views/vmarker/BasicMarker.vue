@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { LngLatLike } from "mapbox-gl";
 import { watch } from "vue";
 import { reactive } from "vue";
 import { accessToken } from "../../utils/mapUtil";
 
 const state = reactive({
-  center: [120, 30],
+  center: [120, 30] as LngLatLike,
   draggable: false,
   visible: true,
   scale: 1,
