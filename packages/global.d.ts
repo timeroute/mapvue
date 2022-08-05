@@ -3,6 +3,7 @@ import Sprite from "./Common/Sprite.vue";
 import Marker from "./Common/Marker.vue";
 import Popup from "./Common/Popup.vue";
 import Fog from "./Common/Fog.vue";
+import FeatureState from "./Common/FeatureState.vue";
 import AttributionControl from "./Controls/AttributionControl.vue";
 import NavigationControl from "./Controls/NavigationControl.vue";
 import ScaleControl from "./Controls/ScaleControl.vue";
@@ -30,6 +31,7 @@ declare module "vue" {
     VMarker: typeof Marker;
     VPopup: typeof Popup;
     VFog: typeof Fog;
+    VFeatureState: typeof FeatureState;
     VAttributionControl: typeof AttributionControl;
     VNavigationControl: typeof NavigationControl;
     VScaleControl: typeof ScaleControl;

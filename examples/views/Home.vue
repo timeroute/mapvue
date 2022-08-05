@@ -26,6 +26,14 @@
         <div class="subitem">
           <router-link to="/vpopup/basic">Basic</router-link>
         </div>
+        <div class="item">VFog</div>
+        <div class="subitem">
+          <router-link to="/vfog/basic">Basic</router-link>
+        </div>
+        <div class="item">VFeatureState</div>
+        <div class="subitem">
+          <router-link to="/vfeaturestate/basic">Basic</router-link>
+        </div>
       </section>
       <section>
         <div class="title">控件组件</div>

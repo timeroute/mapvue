@@ -29,6 +29,11 @@ const router = createRouter({
       component: () => import("./views/vpopup/Basic.vue"),
     },
     {
+      path: "/vfeaturestate/basic",
+      name: "VFeatureStateBasic",
+      component: () => import("./views/vfeaturestate/Basic.vue"),
+    },
+    {
       path: "/vsprite/basic",
       name: "VSpriteBasic",
       component: () => import("./views/vsprite/Basic.vue"),
