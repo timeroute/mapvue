@@ -15,30 +15,39 @@ interface Props {
 const map = inject(mapvueSymbol);
 const props = defineProps<Props>();
 
-const setFeatureState = () => {
+const setFeatureState = (feature: FeatureProps, state: object) => {
   if (!map) return;
-  if (!props.feature.id || !props.feature.source) return;
-  map.value.setFeatureState(props.feature, props.state);
+  if (!feature.id || !feature.source) return;
+  map.value.setFeatureState(feature, state);
+};
+
+const removeFeatureState = (feature: FeatureProps) => {
+  if (!map) return;
+  if (!feature.id || !feature.source) return;
+  map.value.removeFeatureState(feature);
 };
 
 watch(
   () => props.feature,
   (newFeature, oldFeature) => {
-    if (!map) return;
-    console.log(newFeature, oldFeature);
-
-    map.value.removeFeatureState(oldFeature);
-    map.value.setFeatureState(newFeature, props.state);
+    removeFeatureState(oldFeature);
+    setFeatureState(newFeature, props.state);
   }
 );
 
-watch(() => props.state, setFeatureState);
+watch(
+  () => props.state,
+  (state) => {
+    setFeatureState(props.feature, state);
+  }
+);
 
-onMounted(() => setFeatureState());
+onMounted(() => {
+  setFeatureState(props.feature, props.state);
+});
 
 onUnmounted(() => {
-  if (!map) return;
-  map.value.removeFeatureState(props.feature);
+  removeFeatureState(props.feature);
 });
 </script>
 
