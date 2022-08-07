@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import mapboxgl from "mapbox-gl";
 import type { LngLatLike, Marker, MarkerOptions, PointLike } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
+import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
+import { useMutationObserver } from "../composables/mutation_observer";
 
 interface Props {
   center?: LngLatLike | undefined;
@@ -19,12 +20,15 @@ const emits = defineEmits<{
   (e: "mouseleave", event: Event): void;
   (e: "update:center", center: LngLatLike): void;
 }>();
+const elRef = ref();
 
 const renderMarker = () => {
   if (!map || !props.center) return;
-  marker.value = new mapboxgl.Marker(props.options || {}).setLngLat(
-    props.center
-  );
+
+  const options = props.options || {};
+  if (elRef.value.innerHTML) options.element = elRef.value;
+
+  marker.value = new mapboxgl.Marker(options).setLngLat(props.center);
   const el = marker.value.getElement();
   marker.value.addTo(map.value);
   marker.value.on("dragend", onDragEvent);
@@ -153,6 +157,17 @@ watch(
 );
 
 onMounted(() => {
+  useMutationObserver(
+    elRef.value,
+    {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    },
+    () => {
+      renderMarker();
+    }
+  );
   renderMarker();
 });
 
@@ -161,4 +176,8 @@ onUnmounted(() => {
 });
 </script>
 
-<template></template>
+<template>
+  <div ref="elRef">
+    <slot />
+  </div>
+</template>
