@@ -25,6 +25,7 @@
         <div class="item">VPopup</div>
         <div class="subitem">
           <router-link to="/vpopup/basic">Basic</router-link>
+          <router-link to="/vpopup/withchart">With Chart</router-link>
         </div>
         <div class="item">VFog</div>
         <div class="subitem">

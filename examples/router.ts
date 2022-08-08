@@ -29,6 +29,11 @@ const router = createRouter({
       component: () => import("./views/vpopup/Basic.vue"),
     },
     {
+      path: "/vpopup/withchart",
+      name: "VPopupWithChart",
+      component: () => import("./views/vpopup/WithChart.vue"),
+    },
+    {
       path: "/vfeaturestate/basic",
       name: "VFeatureStateBasic",
       component: () => import("./views/vfeaturestate/Basic.vue"),
