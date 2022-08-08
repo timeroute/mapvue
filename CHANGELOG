@@ -1,6 +1,7 @@
 ### 2022-08-08
 
 1. Fixed mouse events in CircleLayer
+2. Fixed MutationObserver in Popup
 
 ### 2022-08-07
 
