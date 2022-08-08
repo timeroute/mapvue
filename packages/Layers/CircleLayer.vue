@@ -32,6 +32,21 @@ const emits = defineEmits<{
   (e: "mouseleave", event: EventData): void;
 }>();
 
+if (map?.value) {
+  useLayerEvent(map.value, "click", props.id, (e) => {
+    emits("click", e);
+  });
+  useLayerEvent(map.value, "mouseenter", props.id, (e) => {
+    emits("mouseenter", e);
+  });
+  useLayerEvent(map.value, "mousemove", props.id, (e) => {
+    emits("mousemove", e);
+  });
+  useLayerEvent(map.value, "mouseleave", props.id, (e) => {
+    emits("mouseleave", e);
+  });
+}
+
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map || !layer.value) return;
   map.value.setPaintProperty(props.id, name, value);
@@ -101,19 +116,6 @@ onMounted(() => {
     options["source-layer"] = props.sourceLayer;
   }
   map.value.addLayer(options);
-
-  useLayerEvent(map.value, "click", props.id, (e) => {
-    emits("click", e);
-  });
-  useLayerEvent(map.value, "mouseenter", props.id, (e) => {
-    emits("mouseenter", e);
-  });
-  useLayerEvent(map.value, "mousemove", props.id, (e) => {
-    emits("mousemove", e);
-  });
-  useLayerEvent(map.value, "mouseleave", props.id, (e) => {
-    emits("mouseleave", e);
-  });
 
   layer.value = map.value.getLayer(props.id);
 });

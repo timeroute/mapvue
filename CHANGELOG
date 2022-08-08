@@ -1,3 +1,7 @@
+### 2022-08-08
+
+1. Fixed mouse events in CircleLayer
+
 ### 2022-08-07
 
 1. Add custom element for VMarker

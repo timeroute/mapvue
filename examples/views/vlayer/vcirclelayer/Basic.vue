@@ -19,6 +19,10 @@ const handleChangeBg = () => {
   state.paint["circle-color"] =
     colors[Math.floor(Math.random() * colors.length)];
 };
+
+const handleMouseEnter = (e) => {
+  console.log(e);
+};
 </script>
 
 <template>
@@ -39,6 +43,7 @@ const handleChangeBg = () => {
         source="geo"
         :paint="state.paint"
         :layout="state.layout"
+        @mouseenter="handleMouseEnter"
       />
     </v-map>
     <div class="control">
