@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import mapboxgl from "mapbox-gl";
 import type { LngLatLike, PointLike, Popup, PopupOptions } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import {
+  computed,
+  inject,
+  onMounted,
+  onUnmounted,
+  ref,
+  shallowRef,
+  watch,
+} from "vue";
 import { mapvueSymbol } from "../symbols";
+import { useMutationObserver } from "../composables/mutation_observer";
 
 interface Props {
   visible: boolean;
@@ -16,14 +25,21 @@ const popup = shallowRef<Popup>();
 const emits = defineEmits<{
   (e: "update:visible", visible: boolean): void;
 }>();
-const popupRef = ref();
-const observer = shallowRef();
+const popupRef = ref<HTMLElement>();
 
-const mutaionCallback = () => {
-  if (props.visible && popup.value) {
-    popup.value.setHTML(popupRef.value.innerHTML);
+useMutationObserver(
+  computed(() => popupRef.value),
+  {
+    attributes: true,
+    childList: true,
+    subtree: true,
+  },
+  () => {
+    if (props.visible && popup.value && popupRef.value) {
+      popup.value.setHTML(popupRef.value.innerHTML);
+    }
   }
-};
+);
 
 const renderPopup = () => {
   if (!map) return;
@@ -99,17 +115,10 @@ const onCloseEvent = () => {
 };
 
 onMounted(() => {
-  observer.value = new MutationObserver(mutaionCallback);
-  observer.value.observe(popupRef.value, {
-    attributes: true,
-    childList: true,
-    subtree: true,
-  });
   renderPopup();
 });
 
 onUnmounted(() => {
-  if (observer.value) observer.value.disconnect();
   destroyPopup();
 });
 </script>

@@ -1,3 +1,7 @@
+### 2022-08-11
+
+1. Reuse useMutationObserver in VPopup
+
 ### 2022-08-08
 
 1. Fixed mouse events in CircleLayer

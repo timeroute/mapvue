@@ -1,19 +1,24 @@
-import { onMounted, ref, onUnmounted } from "vue";
+import { onUnmounted, watch, type ComputedRef } from "vue";
 
 export function useMutationObserver(
-  dom: Node,
+  dom: ComputedRef<HTMLElement | undefined>,
   options: MutationObserverInit | undefined,
   callback: MutationCallback
 ) {
-  const observer = ref<MutationObserver>();
+  let observer: MutationObserver;
 
-  onMounted(() => {
-    observer.value = new MutationObserver(callback);
-    observer.value.observe(dom, options);
+  watch(dom, (dom) => {
+    if (dom) {
+      observer = new MutationObserver(callback);
+      observer.observe(dom, options);
+    } else {
+      if (!observer) return;
+      observer.disconnect();
+    }
   });
 
   onUnmounted(() => {
-    if (!observer.value) return;
-    observer.value.disconnect();
+    if (!observer) return;
+    observer.disconnect();
   });
 }

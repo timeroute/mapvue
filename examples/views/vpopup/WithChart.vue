@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import type { LngLatLike } from "mapbox-gl";
 import { readonly, reactive } from "vue";
 import { accessToken } from "../../utils/mapUtil";
@@ -15,7 +16,7 @@ const data = readonly({
       },
     },
   ],
-});
+}) as FeatureCollection<Geometry, GeoJsonProperties>;
 
 const state = reactive({
   center: [-77.4144, 25.0759] as LngLatLike,
