@@ -45,6 +45,7 @@ const renderPopup = () => {
   if (!map) return;
   if (!props.center) return;
   if (!props.visible) return;
+  if (!popupRef.value) return;
   popup.value = new mapboxgl.Popup(props.options || {})
     .setLngLat(props.center)
     .setHTML(popupRef.value.innerHTML)
