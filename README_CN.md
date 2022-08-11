@@ -4,8 +4,6 @@
   <a href="https://npmjs.com/package/mapvue"><img src="https://img.shields.io/npm/v/mapvue.svg" alt="npm package"></a>
 </p>
 
-> 该库正在开发中，虽然基本开发完成，但仍不推荐在生产环境使用。
-
 [English](./README.md) ｜ 中文
 
 一个封装比较好的 MapboxGL 组件库。

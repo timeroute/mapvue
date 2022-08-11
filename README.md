@@ -4,8 +4,6 @@
   <a href="https://npmjs.com/package/mapvue"><img src="https://img.shields.io/npm/v/mapvue.svg" alt="npm package"></a>
 </p>
 
-> The library is in developing, although basic development is complete, it is still not recommended for use in production environments.
-
 English ｜ [中文](./README_CN.md)
 
 A well-packaged MapboxGL component library
