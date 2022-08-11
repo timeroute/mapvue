@@ -3,7 +3,8 @@
   "include": [
     "env.d.ts",
     "packages/**/*",
-    "packages/**/*.vue"
+    "packages/**/*.vue",
+    "global.d.ts"
   ],
   "compilerOptions": {
     "baseUrl": ".",
