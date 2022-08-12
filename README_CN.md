@@ -1,8 +1,11 @@
 # MapVue
 
-<p>
-  <a href="https://npmjs.com/package/mapvue"><img src="https://img.shields.io/npm/v/mapvue.svg" alt="npm package"></a>
-</p>
+![npm](https://img.shields.io/npm/v/mapvue)
+![npm](https://img.shields.io/npm/dw/mapvue)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/mapvue)
+![NPM](https://img.shields.io/npm/l/mapvue)
+![npm collaborators](https://img.shields.io/npm/collaborators/mapvue)
+![GitHub last commit](https://img.shields.io/github/last-commit/timeroute/mapvue)
 
 [English](./README.md) ｜ 中文
 
