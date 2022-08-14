@@ -7,18 +7,20 @@ export function useMutationObserver(
 ) {
   let observer: MutationObserver;
 
+  const destroy = () => {
+    if (!observer) return;
+    observer.disconnect();
+  };
+
   watch(dom, (dom) => {
+    destroy();
     if (dom) {
       observer = new MutationObserver(callback);
       observer.observe(dom, options);
-    } else {
-      if (!observer) return;
-      observer.disconnect();
     }
   });
 
   onUnmounted(() => {
-    if (!observer) return;
-    observer.disconnect();
+    destroy();
   });
 }

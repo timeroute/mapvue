@@ -11,7 +11,7 @@ import {
   watch,
 } from "vue";
 import { mapvueSymbol } from "../symbols";
-import { useMutationObserver } from "../composables/mutation_observer";
+import { useMutationObserver } from "../composables";
 
 interface Props {
   visible: boolean;

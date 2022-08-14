@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import mapboxgl from "mapbox-gl";
 import type { LngLatLike, Marker, MarkerOptions, PointLike } from "mapbox-gl";
-import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import {
+  computed,
+  inject,
+  onMounted,
+  onUnmounted,
+  ref,
+  shallowRef,
+  watch,
+} from "vue";
 import { mapvueSymbol } from "../symbols";
-import { useMutationObserver } from "../composables/mutation_observer";
+import { useMutationObserver, useEventListener } from "../composables";
 
 interface Props {
   center?: LngLatLike | undefined;
@@ -29,42 +37,15 @@ const renderMarker = () => {
   if (elRef.value.innerHTML) options.element = elRef.value;
 
   marker.value = new mapboxgl.Marker(options).setLngLat(props.center);
-  const el = marker.value.getElement();
   marker.value.addTo(map.value);
   marker.value.on("dragend", onDragEvent);
-  el.addEventListener("click", onClickEvent);
-  el.addEventListener("mouseenter", onMouseEnterEvent);
-  el.addEventListener("mousemove", onMouseMoveEvent);
-  el.addEventListener("mouseleave", onMouseLeaveEvent);
 };
 
 const destroyMarker = () => {
   if (!map || !marker.value) return;
-  const el = marker.value.getElement();
   marker.value.off("dragend", onDragEvent);
-  el.removeEventListener("click", onClickEvent);
-  el.removeEventListener("mouseenter", onMouseEnterEvent);
-  el.removeEventListener("mousemove", onMouseMoveEvent);
-  el.removeEventListener("mouseleave", onMouseLeaveEvent);
   marker.value.remove();
   marker.value = undefined;
-};
-
-const onClickEvent = (e: Event) => {
-  e.stopPropagation();
-  emits("click", e);
-};
-
-const onMouseEnterEvent = (e: Event) => {
-  emits("mouseenter", e);
-};
-
-const onMouseMoveEvent = (e: Event) => {
-  emits("mousemove", e);
-};
-
-const onMouseLeaveEvent = (e: Event) => {
-  emits("mouseleave", e);
 };
 
 const onDragEvent = () => {
@@ -72,6 +53,38 @@ const onDragEvent = () => {
   const { lng, lat } = marker.value.getLngLat();
   emits("update:center", [lng, lat]);
 };
+
+useEventListener(
+  computed(() => marker.value?.getElement()),
+  "click",
+  (e) => {
+    emits("click", e);
+  }
+);
+
+useEventListener(
+  computed(() => marker.value?.getElement()),
+  "mouseenter",
+  (e) => {
+    emits("mouseenter", e);
+  }
+);
+
+useEventListener(
+  computed(() => marker.value?.getElement()),
+  "mousemove",
+  (e) => {
+    emits("mousemove", e);
+  }
+);
+
+useEventListener(
+  computed(() => marker.value?.getElement()),
+  "mouseleave",
+  (e) => {
+    emits("mouseleave", e);
+  }
+);
 
 watch(
   () => props.center,

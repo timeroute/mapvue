@@ -7,7 +7,7 @@ import type {
   HeatmapPaint,
 } from "mapbox-gl";
 import { inject, onMounted, onBeforeUnmount, shallowRef, watch } from "vue";
-import { useLayerEvent } from "../composables/layer_event";
+import { useLayerEvent } from "../composables";
 import { mapvueSymbol } from "../symbols";
 import { diffObject } from "../utils";
 
