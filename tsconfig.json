@@ -4,7 +4,11 @@
     "env.d.ts",
     "packages/**/*",
     "packages/**/*.vue",
-    "global.d.ts"
+    "tests/**/*",
+    "tests/**/*.vue",
+    "global.d.ts",
+    "setupTest.ts",
+    "__mocks__"
   ],
   "compilerOptions": {
     "baseUrl": ".",
@@ -12,7 +16,10 @@
       "@/*": [
         "./packages/*"
       ]
-    }
+    },
+    "types": [
+      "vitest/globals"
+    ]
   },
   "references": [
     {
