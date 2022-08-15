@@ -84,10 +84,12 @@ watch(
 
 watch(
   () => props.options?.anchor,
-  () => {
+  (anchor) => {
     if (!popup.value || !props.visible) return;
-    destroyPopup();
-    renderPopup();
+    if (anchor) {
+      destroyPopup();
+      renderPopup();
+    }
   }
 );
 
