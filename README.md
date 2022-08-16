@@ -2,7 +2,6 @@
 
 ![npm](https://img.shields.io/npm/v/mapvue)
 ![npm](https://img.shields.io/npm/dw/mapvue)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/mapvue)
 ![NPM](https://img.shields.io/npm/l/mapvue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/timeroute/mapvue)
 ![build](https://github.com/timeroute/mapvue/actions/workflows/test.yml/badge.svg)

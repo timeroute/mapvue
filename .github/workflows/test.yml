@@ -1,4 +1,4 @@
-name: pnpm test Workflow
+name: test
 on:
   push:
 jobs:
