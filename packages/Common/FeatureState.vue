@@ -12,7 +12,7 @@ interface Props {
   state: object;
 }
 
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 const setFeatureState = (feature: FeatureProps, state: object) => {

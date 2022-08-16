@@ -7,7 +7,7 @@ interface Props {
   url: HTMLImageElement | ImageBitmap | string | undefined;
 }
 
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 const updateImage = () => {

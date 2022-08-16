@@ -12,7 +12,7 @@ interface Props {
 }
 
 const layer = shallowRef<AnyLayer>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 const updatePaintProperty = (name: string, value: unknown) => {

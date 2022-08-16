@@ -1,3 +1,8 @@
+### 2022-08-16
+
+1. Add default value in injection
+2. Fixed `generateId` prop in geosource
+
 ### 2022-08-15
 
 1. Fixed anchor in VPopup

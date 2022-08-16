@@ -11,7 +11,7 @@ interface Props {
 
 const canvasRef = ref();
 const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 defineExpose({

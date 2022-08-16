@@ -10,7 +10,7 @@ interface Props {
 }
 
 const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 const updateImageSource = () => {
