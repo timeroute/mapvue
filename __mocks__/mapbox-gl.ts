@@ -54,15 +54,13 @@ Map.prototype.getStyle = function getStyle() {
 };
 
 Map.prototype.setStyle = vi.fn();
-
 Map.prototype.fitBounds = vi.fn();
-
 Map.prototype.setMaxZoom = vi.fn();
 Map.prototype.setMinZoom = vi.fn();
 Map.prototype.setMaxPitch = vi.fn();
 Map.prototype.setMinPitch = vi.fn();
-
 Map.prototype.setMaxBounds = vi.fn();
+Map.prototype.setLayerZoomRange = vi.fn();
 
 Map.prototype.addSource = function addSource(name, source) {
   this._sources[name] = source;
