@@ -4,8 +4,8 @@
 ![npm](https://img.shields.io/npm/dw/mapvue)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/mapvue)
 ![NPM](https://img.shields.io/npm/l/mapvue)
-![npm collaborators](https://img.shields.io/npm/collaborators/mapvue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/timeroute/mapvue)
+![build](https://github.com/timeroute/mapvue/actions/workflows/test.yml/badge.svg)
 
 English ｜ [中文](./README_CN.md)
 
