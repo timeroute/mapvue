@@ -24,6 +24,12 @@ import ImageSource from "./packages/Sources/ImageSource.vue";
 import VideoSource from "./packages/Sources/VideoSource.vue";
 import CanvasSource from "./packages/Sources/CanvasSource.vue";
 
+declare module "vitest" {
+  export interface TestContext {
+    accessToken?: string;
+  }
+}
+
 declare module "vue" {
   export interface GlobalComponents {
     VMap: typeof Map;
