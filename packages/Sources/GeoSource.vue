@@ -7,14 +7,16 @@ import type {
   GeoJSONSourceRaw,
   PromoteIdSpecification,
 } from "mapbox-gl";
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "geojson";
 
 interface Props {
   id: string;
-  data:
-    | GeoJSON.Feature<GeoJSON.Geometry>
-    | GeoJSON.FeatureCollection<GeoJSON.Geometry>
-    | string
-    | undefined;
+  data: object | string | undefined;
   attribution?: string;
   buffer?: number;
   cluster?: boolean;
@@ -23,7 +25,7 @@ interface Props {
   clusterProperties?: object | undefined;
   clusterRadius?: number;
   filter?: boolean | unknown[] | null | undefined;
-  generatedId?: boolean;
+  generateId?: boolean;
   lineMetrics?: boolean;
   maxzoom?: number;
   protomteId?: PromoteIdSpecification | undefined;
@@ -31,12 +33,21 @@ interface Props {
 }
 
 const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 watch(
-  () => props.data,
-  (data) => {
+  () =>
+    props.data as
+      | string
+      | Feature<Geometry, GeoJsonProperties>
+      | FeatureCollection<Geometry, GeoJsonProperties>,
+  (
+    data:
+      | string
+      | Feature<Geometry, GeoJsonProperties>
+      | FeatureCollection<Geometry, GeoJsonProperties>
+  ) => {
     if (data) {
       (source.value as GeoJSONSource).setData(data);
     }
@@ -47,15 +58,18 @@ onMounted(() => {
   if (!map) return;
   const options: GeoJSONSourceRaw = {
     type: "geojson",
-    data: props.data,
+    data: props.data as
+      | string
+      | Feature<Geometry, GeoJsonProperties>
+      | FeatureCollection<Geometry, GeoJsonProperties>,
   };
 
   if (props.buffer !== undefined) {
     options.buffer = props.buffer;
   }
 
-  if (props.generatedId) {
-    options.generateId = props.generatedId;
+  if (props.generateId) {
+    options.generateId = props.generateId;
   }
 
   if (props.lineMetrics) {

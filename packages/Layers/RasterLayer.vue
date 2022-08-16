@@ -22,7 +22,7 @@ interface Props {
 }
 
 const layer = shallowRef<AnyLayer>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 const emits = defineEmits<{
   (e: "click", event: EventData): void;

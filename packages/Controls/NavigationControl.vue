@@ -18,7 +18,7 @@ interface Props {
 
 const control = shallowRef<IControl>();
 const props = defineProps<Props>();
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 
 onMounted(() => {
   if (!map) return;

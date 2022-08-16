@@ -19,7 +19,7 @@ interface Props {
   options?: PopupOptions;
 }
 
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 const popup = shallowRef<Popup>();
 const emits = defineEmits<{

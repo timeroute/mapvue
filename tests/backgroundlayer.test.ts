@@ -32,12 +32,6 @@ function createComponent(accessToken: string | undefined) {
 test("mount vbackgroundlayer component", async ({ accessToken }) => {
   const wrapper = mount(createComponent(accessToken), {
     props: {
-      paint: {
-        "background-color": "#f00",
-      },
-      layout: {
-        visibility: "visible",
-      },
       sourceLayer: "water",
     },
   });
@@ -54,10 +48,32 @@ test("mount vbackgroundlayer component", async ({ accessToken }) => {
     },
   });
   await nextTick();
-  expect(wrapper.vm.props.paint).toEqual({
-    "background-color": "#f00",
-    "background-opacity": 0.5,
-  });
   wrapper.unmount();
   expect(wrapper.exists()).toBe(false);
+});
+
+test("update vbackgroundlayer when unmount", async () => {
+  const wrapper = mount(VBackgroundLayer, {
+    props: {
+      id: "test",
+      minzoom: 0,
+      maxzoom: 20,
+    },
+  });
+  await nextTick();
+  wrapper.setProps({
+    id: "test",
+    minzoom: 2,
+    maxzoom: 18,
+    paint: {
+      "background-color": "#f00",
+      "background-opacity": 0.5,
+    },
+    layout: {
+      visibility: "none",
+    },
+    filter: ["==", ["get", "value"], 0],
+  });
+  await nextTick();
+  wrapper.unmount();
 });

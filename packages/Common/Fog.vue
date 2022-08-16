@@ -12,7 +12,7 @@ interface Props {
   "star-intensity"?: number | Expression | undefined;
 }
 
-const map = inject(mapvueSymbol);
+const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
 const renderFog = (options = {}) => {
