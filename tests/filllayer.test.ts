@@ -89,3 +89,63 @@ test("update vfilllayer filter", async ({ accessToken }) => {
   expect(wrapper.vm.props.filter).toEqual(["==", ["get", "value"], 0]);
   wrapper.unmount();
 });
+
+test("update vfilllayer maxzoom", async ({ accessToken }) => {
+  const wrapper = mount(createComponent(accessToken), {
+    props: {
+      minzoom: 0,
+      maxzoom: 20,
+    },
+  });
+  await nextTick();
+  wrapper.setProps({
+    minzoom: 0,
+    maxzoom: undefined,
+  });
+  await nextTick();
+  wrapper.unmount();
+});
+
+test("update vfilllayer minzoom", async ({ accessToken }) => {
+  const wrapper = mount(createComponent(accessToken), {
+    props: {
+      minzoom: 0,
+      maxzoom: 20,
+    },
+  });
+  await nextTick();
+  wrapper.setProps({
+    minzoom: undefined,
+    maxzoom: 20,
+  });
+  await nextTick();
+  wrapper.unmount();
+});
+
+test("update vfilllayer when unmount", async () => {
+  const wrapper = mount(VFillLayer, {
+    props: {
+      id: "test",
+      source: "test",
+      minzoom: 0,
+      maxzoom: 20,
+    },
+  });
+  await nextTick();
+  wrapper.setProps({
+    id: "test",
+    source: "test",
+    minzoom: 2,
+    maxzoom: 18,
+    paint: {
+      "fill-color": "#f00",
+      "fill-opacity": 0.5,
+    },
+    layout: {
+      visibility: "none",
+    },
+    filter: ["==", ["get", "value"], 0],
+  });
+  await nextTick();
+  wrapper.unmount();
+});
