@@ -16,19 +16,19 @@ import type {
 
 interface Props {
   id: string;
-  data: object | string | undefined;
+  data: object | string;
   attribution?: string;
   buffer?: number;
   cluster?: boolean;
   clusterMaxZoom?: number;
   clusterMinPoints?: number;
-  clusterProperties?: object | undefined;
+  clusterProperties?: object;
   clusterRadius?: number;
-  filter?: boolean | unknown[] | null | undefined;
+  filter?: boolean | unknown[] | null;
   generateId?: boolean;
   lineMetrics?: boolean;
   maxzoom?: number;
-  protomteId?: PromoteIdSpecification | undefined;
+  protomteId?: PromoteIdSpecification;
   tolerance?: number;
 }
 

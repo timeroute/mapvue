@@ -14,7 +14,7 @@ import { mapvueSymbol } from "../symbols";
 import { useMutationObserver, useEventListener } from "../composables";
 
 interface Props {
-  center?: LngLatLike | undefined;
+  center?: LngLatLike;
   options?: MarkerOptions;
 }
 
@@ -53,6 +53,18 @@ const onDragEvent = () => {
   const { lng, lat } = marker.value.getLngLat();
   emits("update:center", [lng, lat]);
 };
+
+useMutationObserver(
+  elRef.value,
+  {
+    attributes: true,
+    childList: true,
+    subtree: true,
+  },
+  () => {
+    renderMarker();
+  }
+);
 
 useEventListener(
   computed(() => marker.value?.getElement()),
@@ -164,23 +176,12 @@ watch(
   () => props.options?.pitchAlignment,
   (pitchAlignment) => {
     if (pitchAlignment) {
-      marker.value?.setRotationAlignment(pitchAlignment);
+      marker.value?.setPitchAlignment(pitchAlignment);
     }
   }
 );
 
 onMounted(() => {
-  useMutationObserver(
-    elRef.value,
-    {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    },
-    () => {
-      renderMarker();
-    }
-  );
   renderMarker();
 });
 

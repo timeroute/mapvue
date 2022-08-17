@@ -4,7 +4,7 @@ import { mapvueSymbol } from "../symbols";
 
 interface FeatureProps {
   source: string;
-  id: string | undefined;
+  id?: string;
   sourceLayer?: string;
 }
 interface Props {
@@ -17,13 +17,13 @@ const props = defineProps<Props>();
 
 const setFeatureState = (feature: FeatureProps, state: object) => {
   if (!map) return;
-  if (!feature.id || !feature.source) return;
+  if (!feature.id) return;
   map.value.setFeatureState(feature, state);
 };
 
 const removeFeatureState = (feature: FeatureProps) => {
   if (!map) return;
-  if (!feature.id || !feature.source) return;
+  if (!feature.id) return;
   map.value.removeFeatureState(feature);
 };
 

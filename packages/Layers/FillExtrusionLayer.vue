@@ -19,7 +19,7 @@ interface Props {
   layout?: FillExtrusionLayout;
   minzoom?: number;
   maxzoom?: number;
-  filter?: unknown[] | undefined;
+  filter?: unknown[];
 }
 
 const layer = shallowRef<AnyLayer>();

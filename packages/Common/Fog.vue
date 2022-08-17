@@ -4,12 +4,12 @@ import type { Expression } from "mapbox-gl";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
-  color?: string | Expression | undefined;
-  "high-color"?: string | Expression | undefined;
-  "space-color"?: string | Expression | undefined;
-  "horizon-blend"?: number | Expression | undefined;
-  range?: number[] | Expression | undefined;
-  "star-intensity"?: number | Expression | undefined;
+  color?: string | Expression;
+  "high-color"?: string | Expression;
+  "space-color"?: string | Expression;
+  "horizon-blend"?: number | Expression;
+  range?: number[] | Expression;
+  "star-intensity"?: number | Expression;
 }
 
 const map = inject(mapvueSymbol, undefined);
@@ -58,3 +58,5 @@ onUnmounted(() => {
   renderFog();
 });
 </script>
+
+<template></template>

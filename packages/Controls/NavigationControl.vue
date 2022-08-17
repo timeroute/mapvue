@@ -5,15 +5,10 @@ import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
-  showCompass?: boolean | undefined;
-  showZoom?: boolean | undefined;
-  visualizePitch?: boolean | undefined;
-  position?:
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | undefined;
+  showCompass?: boolean;
+  showZoom?: boolean;
+  visualizePitch?: boolean;
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
 const control = shallowRef<IControl>();

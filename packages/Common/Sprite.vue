@@ -4,7 +4,7 @@ import { mapvueSymbol } from "../symbols";
 
 interface Props {
   name: string;
-  url: HTMLImageElement | ImageBitmap | string | undefined;
+  url?: HTMLImageElement | ImageBitmap | string;
 }
 
 const map = inject(mapvueSymbol, undefined);

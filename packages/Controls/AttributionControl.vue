@@ -5,14 +5,9 @@ import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
-  compact?: boolean | undefined;
-  customAttribution?: string | string[] | undefined;
-  position?:
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | undefined;
+  compact?: boolean;
+  customAttribution?: string | string[];
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
 const control = shallowRef<IControl>();
