@@ -7,7 +7,7 @@ interface Props {
   id: string;
   urls: string[];
   coordinates: number[][];
-  playing: boolean;
+  playing?: boolean;
 }
 
 const source = shallowRef<AnySourceImpl>();
@@ -19,18 +19,17 @@ const updateVideoSource = () => {
   (source.value as VideoSource).setCoordinates(props.coordinates);
 };
 
+const playVideo = () => {
+  if (props.playing) {
+    (source.value as CanvasSource).play();
+  } else {
+    (source.value as CanvasSource).pause();
+  }
+};
+
 watch(() => props.coordinates, updateVideoSource);
 
-watch(
-  () => props.playing,
-  () => {
-    if (props.playing) {
-      (source.value as CanvasSource).play();
-    } else {
-      (source.value as CanvasSource).pause();
-    }
-  }
-);
+watch(() => props.playing, playVideo);
 
 onMounted(() => {
   if (!map) return;
@@ -40,6 +39,7 @@ onMounted(() => {
     coordinates: props.coordinates,
   });
   source.value = map.value.getSource(props.id);
+  playVideo();
 });
 
 onUnmounted(() => {

@@ -12,7 +12,7 @@ interface Props {
   id: string;
   url?: string;
   tiles?: string[];
-  promoteId?: PromoteIdSpecification | undefined;
+  promoteId?: PromoteIdSpecification;
   scheme?: "xyz" | "tms";
   attribution?: string;
   bounds?: number[];

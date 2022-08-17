@@ -21,7 +21,6 @@ defineExpose({
 watch(
   () => props.coordinates,
   (coordinates) => {
-    if (!coordinates) return;
     (source.value as CanvasSource).setCoordinates(coordinates);
   }
 );

@@ -5,14 +5,9 @@ import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
 interface Props {
-  maxWidth?: number | undefined;
+  maxWidth?: number;
   unit?: "imperial" | "metric" | "nautical";
-  position:
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | undefined;
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 
 const control = shallowRef<IControl>();

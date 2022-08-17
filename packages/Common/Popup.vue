@@ -15,7 +15,7 @@ import { useMutationObserver } from "../composables";
 
 interface Props {
   visible: boolean;
-  center?: LngLatLike | undefined;
+  center?: LngLatLike;
   options?: PopupOptions;
 }
 
