@@ -18,7 +18,7 @@ function Map() {
   this.style = {
     sources: this._sources,
     layers: this._layers,
-    sourceCaches: {},
+    _sourceCaches: {},
   };
 
   this.flyTo = vi.fn();
@@ -33,6 +33,8 @@ function Map() {
   this.queryRenderedFeatures = vi.fn(() => []);
   this.setFeatureState = vi.fn();
   this.removeFeatureState = vi.fn();
+  this.setFeatureState = vi.fn();
+  this.setFog = vi.fn();
 
   return this;
 }
@@ -61,11 +63,14 @@ Map.prototype.setMaxPitch = vi.fn();
 Map.prototype.setMinPitch = vi.fn();
 Map.prototype.setMaxBounds = vi.fn();
 Map.prototype.setLayerZoomRange = vi.fn();
+Map.prototype.setTerrain = vi.fn();
+Map.prototype.triggerRepaint = vi.fn();
 
 Map.prototype.addSource = function addSource(name, source) {
   this._sources[name] = source;
-  this.style.sourceCaches[name] = {
+  this.style._sourceCaches[`other:${name}`] = {
     clearTiles: vi.fn(),
+    update: vi.fn(),
   };
 };
 
@@ -76,8 +81,13 @@ Map.prototype.getSource = function getSource(name) {
 
   const source = {
     setData: vi.fn(),
+    setTiles: vi.fn(),
+    setUrl: vi.fn(),
     load: vi.fn(),
     updateImage: vi.fn(),
+    setCoordinates: vi.fn(),
+    play: vi.fn(),
+    pause: vi.fn(),
     _tileJSONRequest: {
       cancel: vi.fn(),
     },
@@ -151,7 +161,7 @@ Map.prototype.removeImage = function removeImage(id) {
 };
 
 Map.prototype.remove = vi.fn();
-Map.prototype.addControl = function addControl(control) {
+Map.prototype.addControl = function addControl(control, position) {
   control.onAdd(this);
   this._controls.push(control);
 
@@ -195,9 +205,31 @@ Popup.prototype.off = function on(listener, fn) {
   fn({ target: this });
 };
 
+function Element() {
+  this.events = {};
+
+  // Define the addEventListener method with a Jest mock function
+  this.addEventListener = vi.fn((event, callback) => {
+    this.events[event] = callback;
+  });
+
+  this.removeEventListener = vi.fn((event, callback) => {
+    delete this.events[event];
+  });
+  return this;
+}
+
 function Marker() {
+  this.element = new Element();
+
   this.setLngLat = vi.fn(() => this);
   this.getLngLat = vi.fn(() => this);
+  this.setOffset = vi.fn();
+  this.getElement = vi.fn(() => this.element);
+  this.setRotation = vi.fn();
+  this.setRotationAlignment = vi.fn();
+  this.setPitchAlignment = vi.fn();
+  this.setDraggable = vi.fn();
 
   this.addTo = vi.fn((map) => {
     if (!map) {
@@ -213,6 +245,10 @@ function Marker() {
 }
 
 Marker.prototype.on = function on(listener, fn) {
+  fn({ target: this });
+};
+
+Marker.prototype.off = function off(listener, fn) {
   fn({ target: this });
 };
 
@@ -249,6 +285,8 @@ function ScaleControl() {
 
   return this;
 }
+
+ScaleControl.prototype.setUnit = vi.fn();
 
 function TrafficControl() {
   return this;

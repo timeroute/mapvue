@@ -11,8 +11,8 @@ interface DiffCallback {
 
 export function diffObject(cur: object, prev: object, cb: DiffCallback) {
   for (const key in cur) {
-    if (!isValidKey(key, cur)) return;
-    if (!prev[key]) {
+    if (!isValidKey(key, prev)) return;
+    if (prev[key] === undefined) {
       cb(key, cur[key]);
       continue;
     }
@@ -21,7 +21,7 @@ export function diffObject(cur: object, prev: object, cb: DiffCallback) {
   }
   for (const key in prev) {
     if (!isValidKey(key, cur)) return;
-    if (cur[key]) continue;
+    if (cur[key] !== undefined) continue;
     cb(key, undefined);
   }
 }
