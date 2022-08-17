@@ -4,11 +4,8 @@
     "env.d.ts",
     "packages/**/*",
     "packages/**/*.vue",
-    "tests/**/*",
-    "tests/**/*.vue",
     "global.d.ts",
-    "setupTest.ts",
-    "__mocks__"
+    "setupTest.ts"
   ],
   "compilerOptions": {
     "baseUrl": ".",
