@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { readonly } from "vue";
-import { accessToken } from "../../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const poly = readonly({
   type: "Feature",

@@ -19,9 +19,19 @@ const router = createRouter({
       component: () => import("./views/vmap/FlyZoom.vue"),
     },
     {
+      path: "/vfog/basic",
+      name: "BasicFog",
+      component: () => import("./views/vfog/Basic.vue"),
+    },
+    {
       path: "/vmarker/basic",
       name: "BasicMarker",
       component: () => import("./views/vmarker/BasicMarker.vue"),
+    },
+    {
+      path: "/vmarker/withchart",
+      name: "MarkerWithChart",
+      component: () => import("./views/vmarker/WithChart.vue"),
     },
     {
       path: "/vpopup/basic",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { readonly, reactive } from "vue";
-import { accessToken } from "../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const data = readonly({
   type: "FeatureCollection",

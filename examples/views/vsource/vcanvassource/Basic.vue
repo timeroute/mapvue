@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, reactive } from "vue";
-import { accessToken } from "../../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const canvasRef = ref();
 const state = reactive({

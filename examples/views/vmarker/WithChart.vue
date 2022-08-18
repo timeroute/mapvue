@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import type { LngLatLike } from "mapbox-gl";
-import { watch, reactive } from "vue";
-
+import { watch, ref, reactive, onUnmounted } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+import { Chart, ArcElement, PieController } from "chart.js";
 
+Chart.register(ArcElement, PieController);
+
+const chartRef = ref();
+const chart = ref();
 const state = reactive({
   center: [120, 30] as LngLatLike,
   draggable: false,
@@ -39,6 +43,37 @@ const handleMouseMove = () => {
 const handleMouseLeave = () => {
   state.visible = false;
 };
+
+watch(
+  () => chartRef.value,
+  () => {
+    if (chartRef.value) {
+      const ctx = chartRef.value.getContext("2d");
+      chart.value = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: ["Red", "Blue", "Yellow"],
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: [300, 50, 100],
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
+              hoverOffset: 4,
+            },
+          ],
+        },
+      });
+    }
+  }
+);
+
+onUnmounted(() => {
+  if (chart.value) chart.value.destroy();
+});
 </script>
 
 <template>
@@ -60,7 +95,9 @@ const handleMouseLeave = () => {
         @mouseenter="handleMouseEnter"
         @mousemove="handleMouseMove"
         @mouseleave="handleMouseLeave"
-      />
+      >
+        <canvas ref="chartRef" width="100" height="100"></canvas>
+      </v-marker>
       <v-popup
         v-model:visible="state.visible"
         :center="state.center"

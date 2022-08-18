@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import mapboxgl from "mapbox-gl";
 import { reactive } from "vue";
-import { accessToken } from "../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 const state = reactive({
   style: "mapbox://styles/mapbox/dark-v10",
 });

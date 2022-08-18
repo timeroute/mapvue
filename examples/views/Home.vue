@@ -21,6 +21,7 @@
         <div class="item">VMarker</div>
         <div class="subitem">
           <router-link to="/vmarker/basic">Basic</router-link>
+          <router-link to="/vmarker/withchart">With Chart</router-link>
         </div>
         <div class="item">VPopup</div>
         <div class="subitem">
@@ -165,9 +166,17 @@
   font-size: 1.1em;
 }
 .content section .subitem {
-  padding-left: 24px;
   display: flex;
-  flex-direction: column;
+  gap: 12px;
+}
+.content section .subitem a {
+  background: #eee;
+  color: #888;
+  text-decoration: none;
+  padding: 8px 16px;
+}
+.content section .subitem a:hover {
+  background: #f6f6f6;
 }
 .footer {
   background-color: white;

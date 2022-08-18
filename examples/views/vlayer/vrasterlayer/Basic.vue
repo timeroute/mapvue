@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { accessToken } from "../../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const tiles = [
   "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",

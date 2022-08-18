@@ -15,7 +15,8 @@
       ]
     },
     "types": [
-      "vitest/globals"
+      "vitest/globals",
+      "vite/client"
     ]
   },
   "references": [

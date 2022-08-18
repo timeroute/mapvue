@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { accessToken } from "../../../utils/mapUtil";
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const colors = ["#f00", "#00f", "#ff0", "#0f0", "#0ff", "#fff", "#888"];
 
