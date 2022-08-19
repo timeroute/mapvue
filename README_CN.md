@@ -5,6 +5,7 @@
 ![NPM](https://img.shields.io/npm/l/mapvue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/timeroute/mapvue)
 ![build](https://github.com/timeroute/mapvue/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/timeroute/mapvue/branch/main/graph/badge.svg?token=2CRUPW2YCN)](https://codecov.io/gh/timeroute/mapvue)
 
 [English](./README.md) ｜ 中文
 
