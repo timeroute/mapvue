@@ -1,8 +1,8 @@
-name: test
+name: coverage
 on:
-  push:
+  pull_request:
 jobs:
-  build:
+  test:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -21,6 +21,7 @@ jobs:
       run: pnpm install
     - name: Run coverage
       run: pnpm coverage
-    - name: 'Report Coverage'
-      if: always()
-      uses:  davelosert/vitest-coverage-report-action@v1
+    - uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/cover.xml
