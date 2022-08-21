@@ -51,11 +51,14 @@ watch(
 );
 
 onMounted(() => {
-  renderFog(props || {});
+  renderFog(props);
 });
 
 onUnmounted(() => {
-  renderFog();
+  if (!map) return;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  map.value.setFog();
 });
 </script>
 
