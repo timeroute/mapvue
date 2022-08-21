@@ -1,3 +1,5 @@
+import type { AnyLayout, AnyPaint } from "mapbox-gl";
+
 export function isValidKey(
   key: string | number | symbol,
   object: object
@@ -6,22 +8,23 @@ export function isValidKey(
 }
 
 interface DiffCallback {
-  (key: string, object: object | undefined): void;
+  (key: string, value: unknown): void;
 }
 
-export function diffObject(cur: object, prev: object, cb: DiffCallback) {
+export function diffObject(
+  cur: AnyPaint | AnyLayout,
+  prev: AnyPaint | AnyLayout,
+  cb: DiffCallback
+) {
   for (const key in cur) {
-    if (!isValidKey(key, prev)) return;
-    if (prev[key] === undefined) {
-      cb(key, cur[key]);
-      continue;
+    if (key in prev) {
+      // both has key, compare equal
+      if (cur[key] === prev[key]) continue;
     }
-    if (cur[key] === prev[key]) continue;
     cb(key, cur[key]);
   }
   for (const key in prev) {
-    if (!isValidKey(key, cur)) return;
-    if (cur[key] !== undefined) continue;
+    if (key in cur) continue;
     cb(key, undefined);
   }
 }
