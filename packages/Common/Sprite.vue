@@ -13,16 +13,7 @@ const props = defineProps<Props>();
 const updateImage = () => {
   if (!map) return;
   const hasImage = map.value.hasImage(props.name);
-  if (
-    props.url instanceof HTMLImageElement ||
-    props.url instanceof ImageBitmap
-  ) {
-    if (hasImage) {
-      map.value.updateImage(props.name, props.url);
-    } else {
-      map.value.addImage(props.name, props.url);
-    }
-  } else if (typeof props.url === "string") {
+  if (typeof props.url === "string") {
     map.value.loadImage(props.url, (err, image) => {
       if (err) return;
       if (!image) return;
@@ -32,6 +23,12 @@ const updateImage = () => {
         map.value.addImage(props.name, image);
       }
     });
+  } else {
+    if (hasImage) {
+      map.value.updateImage(props.name, props.url as ImageBitmap);
+    } else {
+      map.value.addImage(props.name, props.url as ImageBitmap);
+    }
   }
 };
 
