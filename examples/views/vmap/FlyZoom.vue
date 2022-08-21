@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { LngLatLike } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const state = reactive({
   options: {
-    center: [120, 30],
+    center: [120, 30] as LngLatLike,
     zoom: 4,
   },
 });

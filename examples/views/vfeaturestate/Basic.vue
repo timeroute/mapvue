@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { EventData } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
@@ -6,7 +7,7 @@ const state = reactive({
   hoverId: undefined,
 });
 
-const handleMouseMove = (e) => {
+const handleMouseMove = (e: EventData) => {
   if (e.features.length > 0) {
     state.hoverId = e.features[0].id;
     console.log(state.hoverId);

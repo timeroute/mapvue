@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { LngLatLike } from "mapbox-gl";
 import { watch, ref, reactive, onUnmounted } from "vue";
-const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 import { Chart, ArcElement, PieController } from "chart.js";
 
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 Chart.register(ArcElement, PieController);
 
 const chartRef = ref();

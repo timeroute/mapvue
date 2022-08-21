@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import mapboxgl from "mapbox-gl";
+import type { Style } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
-const state = reactive({
+
+interface IState {
+  style: Style | string;
+}
+
+const state = reactive<IState>({
   style: "mapbox://styles/mapbox/dark-v10",
 });
 
@@ -18,7 +23,7 @@ const handleLoaded = () => {
       },
     ],
     sources: {},
-  } as mapboxgl.Style;
+  };
 };
 </script>
 

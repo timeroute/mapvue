@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import * as echarts from "echarts";
 import { onMounted, onUnmounted, reactive, ref } from "vue";
 
@@ -10,9 +10,9 @@ const state = reactive({
 
 onMounted(() => {
   setInterval(() => {
-    state.text = Math.random() * 100;
+    state.text = String(Math.random() * 100);
   }, 1000);
-  chart.value = echarts.init(chartRef.value, null, {
+  chart.value = echarts.init(chartRef.value, undefined, {
     width: 400,
     height: 400,
     renderer: "svg",

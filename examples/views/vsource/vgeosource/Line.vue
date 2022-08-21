@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Feature } from "geojson";
+import type { Feature } from "geojson";
 import { readonly } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 

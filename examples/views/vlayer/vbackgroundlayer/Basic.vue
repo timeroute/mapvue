@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import type { BackgroundLayout, BackgroundPaint } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const colors = ["#f00", "#00f", "#ff0", "#0f0", "#0ff", "#fff", "#888"];
 
-const state = reactive({
+interface IState {
+  paint: BackgroundPaint;
+  layout: BackgroundLayout;
+}
+
+const state = reactive<IState>({
   paint: {
     "background-color": "#f00",
     "background-opacity": 1,

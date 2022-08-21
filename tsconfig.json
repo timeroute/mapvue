@@ -4,11 +4,14 @@
     "env.d.ts",
     "packages/**/*",
     "packages/**/*.vue",
+    "examples/**/*",
+    "examples/**/*.vue",
     "global.d.ts",
     "setupTest.ts"
   ],
   "compilerOptions": {
     "baseUrl": ".",
+    "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@/*": [
         "./packages/*"

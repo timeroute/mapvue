@@ -258,22 +258,6 @@ function AttributionControl() {
   return this;
 }
 
-function FullscreenControl() {
-  this.onAdd = vi.fn();
-
-  return this;
-}
-
-function GeolocateControl() {
-  this.onAdd = vi.fn();
-
-  return this;
-}
-
-GeolocateControl.prototype.on = function on(listener, fn) {
-  fn({ target: this });
-};
-
 function NavigationControl() {
   this.onAdd = vi.fn();
 
@@ -288,19 +272,12 @@ function ScaleControl() {
 
 ScaleControl.prototype.setUnit = vi.fn();
 
-function TrafficControl() {
-  return this;
-}
-
 module.exports = {
   Map,
   Popup,
   Marker,
   AttributionControl,
-  FullscreenControl,
-  GeolocateControl,
   NavigationControl,
   ScaleControl,
-  TrafficControl,
   supported: () => true,
 };

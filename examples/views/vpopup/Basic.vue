@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { EventData, LngLatLike } from "mapbox-gl";
 import { readonly, reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
@@ -16,7 +17,7 @@ const data = readonly({
 });
 
 const state = reactive({
-  center: [-77.4144, 25.0759],
+  center: [-77.4144, 25.0759] as LngLatLike,
   text: "asdfasdf",
   visible: true,
 });
@@ -26,7 +27,7 @@ const handleClick = () => {
   state.visible = true;
 };
 
-const handleMouseEnter = (e) => {
+const handleMouseEnter = (e: EventData) => {
   console.log(e);
 };
 </script>

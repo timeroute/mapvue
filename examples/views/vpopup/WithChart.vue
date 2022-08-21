@@ -2,8 +2,9 @@
 import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import type { LngLatLike } from "mapbox-gl";
 import { readonly, reactive } from "vue";
-const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 import Chart from "./Chart.vue";
+
+const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const data = readonly({
   type: "FeatureCollection",

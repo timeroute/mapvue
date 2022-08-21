@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FillLayout, FillPaint } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
@@ -35,7 +36,12 @@ const data = {
   },
 };
 
-const state = reactive({
+interface IState {
+  paint: FillPaint;
+  layout: FillLayout;
+}
+
+const state = reactive<IState>({
   paint: {
     "fill-color": "#f00",
     "fill-opacity": 1,

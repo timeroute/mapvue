@@ -1,3 +1,9 @@
+### 2022-08-21
+
+1. Fixed remove fog
+2. Fixed updateImage in VSprite
+3. Update diffObject.
+
 ### 2022-08-17
 
 1. Fixed diff object in updating layer property

@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import type { CircleLayout, CirclePaint, EventData } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 const colors = ["#f00", "#00f", "#ff0", "#0f0", "#0ff", "#fff", "#888"];
 
-const state = reactive({
+interface IState {
+  paint: CirclePaint;
+  layout: CircleLayout;
+}
+
+const state = reactive<IState>({
   paint: {
     "circle-color": "#f00",
     "circle-opacity": 1,
@@ -20,7 +26,7 @@ const handleChangeBg = () => {
     colors[Math.floor(Math.random() * colors.length)];
 };
 
-const handleMouseEnter = (e) => {
+const handleMouseEnter = (e: EventData) => {
   console.log(e);
 };
 </script>

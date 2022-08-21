@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import type { HeatmapLayout, HeatmapPaint } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
-const state = reactive({
+interface IState {
+  paint: HeatmapPaint;
+  layout: HeatmapLayout;
+}
+
+const state = reactive<IState>({
   paint: {
     "heatmap-color": [
       "interpolate",

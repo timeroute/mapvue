@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import type { SymbolLayout, SymbolPaint } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
-const state = reactive({
+interface IState {
+  paint: SymbolPaint;
+  layout: SymbolLayout;
+}
+
+const state = reactive<IState>({
   paint: {},
   layout: {
     "icon-image": "cat",

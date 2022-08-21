@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { LineLayout, LinePaint } from "mapbox-gl";
 import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
@@ -35,7 +36,12 @@ const data = {
   },
 };
 
-const state = reactive({
+interface IState {
+  paint: LinePaint;
+  layout: LineLayout;
+}
+
+const state = reactive<IState>({
   paint: {
     "line-color": "#f00",
     "line-width": 3,
