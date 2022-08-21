@@ -15,43 +15,49 @@ interface Props {
 const map = inject(mapvueSymbol, undefined);
 const props = defineProps<Props>();
 
-const renderFog = (options = {}) => {
+const renderFog = () => {
   if (!map) return;
+  const options = {};
+  Object.keys(props).forEach((key) => {
+    if (props[key] !== undefined) {
+      options[key] = props[key];
+    }
+  });
   map.value.setFog(options);
 };
 
 watch(
   () => props.color,
-  () => renderFog(props)
+  () => renderFog()
 );
 
 watch(
   () => props["horizon-blend"],
-  () => renderFog(props)
+  () => renderFog()
 );
 
 watch(
   () => props["high-color"],
-  () => renderFog(props)
+  () => renderFog()
 );
 
 watch(
   () => props["space-color"],
-  () => renderFog(props)
+  () => renderFog()
 );
 
 watch(
   () => props["star-intensity"],
-  () => renderFog(props)
+  () => renderFog()
 );
 
 watch(
   () => props.range,
-  () => renderFog(props)
+  () => renderFog()
 );
 
 onMounted(() => {
-  renderFog(props);
+  renderFog();
 });
 
 onUnmounted(() => {

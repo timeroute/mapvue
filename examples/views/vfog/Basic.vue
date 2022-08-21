@@ -10,11 +10,7 @@ interface IState {
 }
 
 const state = reactive<IState>({
-  fog: {
-    color: "#242b4b",
-    range: [-1, 2],
-    "horizon-blend": 0.2,
-  },
+  fog: {},
   visible: true,
 });
 </script>
