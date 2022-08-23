@@ -84,6 +84,11 @@ const router = createRouter({
       component: () => import("./views/vsource/vgeosource/Polygon.vue"),
     },
     {
+      path: "/vsource/vgeosource/cluster",
+      name: "GeoSourceCluster",
+      component: () => import("./views/cluster/Cluster.vue"),
+    },
+    {
       path: "/vsource/vrastersource/basic",
       name: "RasterSourceBasic",
       component: () => import("./views/vsource/vrastersource/Basic.vue"),

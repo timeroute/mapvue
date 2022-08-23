@@ -59,6 +59,7 @@
           <router-link to="/vsource/vgeosource/point">Point</router-link>
           <router-link to="/vsource/vgeosource/line">Line</router-link>
           <router-link to="/vsource/vgeosource/polygon">Polygon</router-link>
+          <router-link to="/vsource/vgeosource/cluster">Cluter</router-link>
         </div>
         <div class="item">VImageSource</div>
         <div class="subitem">
