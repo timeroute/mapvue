@@ -73,9 +73,10 @@ watch(
 watch(
   () => props.center,
   () => {
+    if (!map) return;
     if (!popup.value || !props.visible) return;
     if (props.center) {
-      popup.value.setLngLat(props.center);
+      popup.value.setLngLat(props.center).addTo(map.value);
     } else {
       destroyPopup();
     }
