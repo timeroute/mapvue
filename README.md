@@ -1,4 +1,4 @@
-# MapVue
+# MapVue 🗺️
 
 ![npm](https://img.shields.io/npm/v/mapvue)
 ![npm](https://img.shields.io/npm/dw/mapvue)
@@ -7,7 +7,11 @@
 ![build](https://github.com/timeroute/mapvue/actions/workflows/test.yml/badge.svg)
 [![codecov](https://codecov.io/gh/timeroute/mapvue/branch/main/graph/badge.svg?token=2CRUPW2YCN)](https://codecov.io/gh/timeroute/mapvue)
 
-English ｜ [中文](./README_CN.md)
+📄 English README ｜ [Chinese README](./README_CN.md)
+
+👏🏻 [English Doc](https://mapvue.netlify.app/) | [Chinese Doc](https://mapvue.netlify.app/zh/)
+
+🌰 [Examples](https://codesandbox.io/s/vmap-examples-mnqjgn)
 
 A well-packaged MapboxGL component library
 
@@ -23,25 +27,37 @@ For example, the `v-fill-layer` component actually wraps the `FillLayer` class.
 
 ## Installation
 
-Although based on MapboxGL, the component library does not integrate 'mapbox-gl' into a bundle and needs to be installed separately.
-
 ```shell
 # use npm
-npm install mapbox-gl mapvue
+npm install mapvue
 
 # use yarn
-yarn add mapbox-gl mapvue
+yarn add mapvue
 
 # use pnpm
-pnpm add mapbox-gl mapvue
+pnpm add mapvue
 ```
 
 ## Import
+
+### vite (recommended)
 
 ```ts
 import { createApp } from "vue";
 import MapVue from "mapvue";
 import "mapvue/dist/mapvue.css";
+import App from "./App.vue";
+
+createApp(App).use(MapVue).mount("#app");
+```
+
+### vue-cli
+
+```ts
+import { createApp } from "vue";
+import MapVue from "mapvue";
+// note: the css name is not the same as in vite
+import "mapvue/dist/style.css";
 import App from "./App.vue";
 
 createApp(App).use(MapVue).mount("#app");
@@ -58,11 +74,20 @@ import token from "some-where";
 <template>
   <v-map :accessToken="token" :options="state.mapOptions">
     <v-geo-source
-      id="ports"
-      data="https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_ports.geojson"
+      id="earthquakes"
+      data="https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
       :cluster="true"
+      :clusterMaxZoom="14"
+      :clusterRadius="50"
     />
-    <v-circle-layer id="ports" source="ports" />
+    <v-circle-layer 
+      id="clusters" 
+      source="earthquakes"
+      :filter="['has', 'point_count']"
+      ...
+    />
   </v-map>
 </template>
 ```
+
+![example](https://s3.bmp.ovh/imgs/2022/08/24/f4c4db9eda3ee3f6.png)
