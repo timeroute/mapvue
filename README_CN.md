@@ -12,6 +12,7 @@
 👏🏻 [英文文档](https://mapvue.netlify.app/) | [中文文档](https://mapvue.netlify.app/zh/)
 
 🌰 [举些例子](https://codesandbox.io/s/vmap-examples-mnqjgn)
+
 一个封装比较好的 MapboxGL 组件库。
 
 MapVue 是一个全面的 MapboxGL 组件库。您可以轻松愉快地将 MapVue 应用于您的 Vue 项目。以组件的形式导入各种数据源和图层，并通过修改 props 的参数来修改图层的状态。
