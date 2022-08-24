@@ -120,9 +120,7 @@ const handleClickPoint = (e: EventData) => {
         :visible="state.popupOptions.visible"
         :center="state.popupOptions.center"
       >
-        <div>
-          {{ state.popupOptions.content }}
-        </div>
+        {{ state.popupOptions.content }}
       </v-popup>
     </v-map>
   </div>

@@ -33,6 +33,7 @@ useMutationObserver(
     attributes: true,
     childList: true,
     subtree: true,
+    characterData: true,
   },
   () => {
     if (props.visible && popup.value && popupRef.value) {
