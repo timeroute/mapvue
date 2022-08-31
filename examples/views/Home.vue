@@ -126,6 +126,10 @@
         <div class="subitem">
           <router-link to="/vlayer/vhillshadelayer/basic">Basic</router-link>
         </div>
+        <div class="item">VSkyLayer</div>
+        <div class="subitem">
+          <router-link to="/vlayer/vskylayer/basic">Basic</router-link>
+        </div>
       </section>
     </div>
     <div class="footer">MapVue @ timeroute 2022</div>

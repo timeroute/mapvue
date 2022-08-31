@@ -163,6 +163,11 @@ const router = createRouter({
       name: "SymbolLayerBasic",
       component: () => import("./views/vlayer/vsymbollayer/Basic.vue"),
     },
+    {
+      path: "/vlayer/vskylayer/basic",
+      name: "SkyLayerBasic",
+      component: () => import("./views/vlayer/vskylayer/Basic.vue"),
+    },
   ],
 });
 

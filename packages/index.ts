@@ -17,6 +17,7 @@ import VHillshadeLayer from "./Layers/HillshadeLayer.vue";
 import VLineLayer from "./Layers/LineLayer.vue";
 import VRasterLayer from "./Layers/RasterLayer.vue";
 import VSymbolLayer from "./Layers/SymbolLayer.vue";
+import VSkyLayer from "./Layers/SkyLayer.vue";
 import VGeoSource from "./Sources/GeoSource.vue";
 import VRasterSource from "./Sources/RasterSource.vue";
 import VRasterDemSource from "./Sources/RasterDemSource.vue";
@@ -46,6 +47,7 @@ const MapVue = {
     app.component("v-line-layer", VLineLayer);
     app.component("v-raster-layer", VRasterLayer);
     app.component("v-symbol-layer", VSymbolLayer);
+    app.component("v-sky-layer", VSkyLayer);
     app.component("v-geo-source", VGeoSource);
     app.component("v-vector-source", VVectorSource);
     app.component("v-raster-source", VRasterSource);
@@ -67,6 +69,7 @@ export {
   VHeatmapLayer,
   VHillshadeLayer,
   VSymbolLayer,
+  VSkyLayer,
   VGeoSource,
   VRasterSource,
   VRasterDemSource,
