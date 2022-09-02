@@ -48,9 +48,12 @@ watch(
       | Feature<Geometry, GeoJsonProperties>
       | FeatureCollection<Geometry, GeoJsonProperties>
   ) => {
-    if (data) {
-      (source.value as GeoJSONSource).setData(data);
-    }
+    if (!map) return;
+    if (!data || !source.value) return;
+    (source.value as GeoJSONSource).setData(data);
+  },
+  {
+    deep: true,
   }
 );
 
