@@ -1,3 +1,8 @@
+### 2022-12-22
+1. Deperate mapbox-gl
+2. Remove style.css
+3. Fixed entry index.ts warning
+
 ### 2022-09-02
 
 1. Fixed update data in VGeoSource

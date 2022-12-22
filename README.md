@@ -29,35 +29,21 @@ For example, the `v-fill-layer` component actually wraps the `FillLayer` class.
 
 ```shell
 # use npm
-npm install mapvue
+npm install mapbox-gl mapvue
 
 # use yarn
-yarn add mapvue
+yarn add mapbox-gl mapvue
 
 # use pnpm
-pnpm add mapvue
+pnpm add mapbox-gl mapvue
 ```
 
 ## Import
 
-### vite (recommended)
-
 ```ts
 import { createApp } from "vue";
 import MapVue from "mapvue";
-import "mapvue/dist/mapvue.css";
-import App from "./App.vue";
-
-createApp(App).use(MapVue).mount("#app");
-```
-
-### vue-cli
-
-```ts
-import { createApp } from "vue";
-import MapVue from "mapvue";
-// note: the css name is not the same as in vite
-import "mapvue/dist/style.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import App from "./App.vue";
 
 createApp(App).use(MapVue).mount("#app");

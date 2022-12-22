@@ -21,7 +21,7 @@ export default defineConfig({
       output: {
         globals: {
           vue: "Vue",
-          mapboxgl: "mapboxgl",
+          "mapbox-gl": "mapbox-gl",
         },
       },
     },

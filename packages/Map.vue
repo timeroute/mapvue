@@ -10,7 +10,6 @@ import {
 } from "vue";
 import mapboxgl from "mapbox-gl";
 import type { Map, LngLatLike } from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { mapvueSymbol } from "./symbols";
 import type { MapboxOptions } from "./map";
 
@@ -161,13 +160,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="mapRef" class="map" />
+  <div ref="mapRef" style="height: 100%; width: 100%" />
   <slot v-if="loaded" />
 </template>
-
-<style scoped>
-.map {
-  height: 100%;
-  width: 100%;
-}
-</style>

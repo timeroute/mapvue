@@ -129,13 +129,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="popup" ref="popupRef">
+  <div style="display: none" ref="popupRef">
     <slot />
   </div>
 </template>
-
-<style scoped>
-.popup {
-  display: none;
-}
-</style>

@@ -29,35 +29,22 @@ MapVue 本质上将一些类包装在 MapboxGL 中，并通过监视类的一些
 
 ```shell
 # use npm
-npm install mapvue
+npm install mapbox-gl mapvue
 
 # use yarn
-yarn add mapvue
+yarn add mapbox-gl mapvue
 
 # use pnpm
-pnpm add mapvue
+pnpm add mapbox-gl mapvue
 ```
 
 ## 导入
 
-### vite (推荐)
 
 ```ts
 import { createApp } from "vue";
 import MapVue from "mapvue";
-import "mapvue/dist/mapvue.css";
-import App from "./App.vue";
-
-createApp(App).use(MapVue).mount("#app");
-```
-
-### vue-cli
-
-```ts
-import { createApp } from "vue";
-import MapVue from "mapvue";
-// 注意：导入 css 名称与 vite 不一致
-import "mapvue/dist/style.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import App from "./App.vue";
 
 createApp(App).use(MapVue).mount("#app");
