@@ -14,6 +14,16 @@ const router = createRouter({
       component: () => import("./views/vmap/BasicMap.vue"),
     },
     {
+      path: "/vmap/comparemap",
+      name: "CompareMap",
+      component: () => import("./views/vmap/CompareMap.vue"),
+    },
+    {
+      path: "/vmap/syncmap",
+      name: "SyncMap",
+      component: () => import("./views/vmap/SyncMap.vue"),
+    },
+    {
       path: "/vmap/flyzoom",
       name: "VMapFlyZoom",
       component: () => import("./views/vmap/FlyZoom.vue"),

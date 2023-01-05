@@ -9,6 +9,8 @@
         <div class="item">VMap</div>
         <div class="subitem">
           <router-link to="/vmap/basic">Basic VMap</router-link>
+          <router-link to="/vmap/syncmap">Sync VMap</router-link>
+          <router-link to="/vmap/comparemap">Compare VMap</router-link>
           <router-link to="/vmap/flyzoom">Fly and Zoom</router-link>
         </div>
       </section>

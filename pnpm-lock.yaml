@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@mapbox/mapbox-gl-sync-move': ^0.3.1
   '@rushstack/eslint-patch': ^1.2.0
   '@types/geojson': ^7946.0.10
   '@types/mapbox-gl': ^2.7.10
@@ -19,6 +20,7 @@ specifiers:
   geojson: ^0.5.0
   happy-dom: ^6.0.4
   mapbox-gl: '>=1.2.0'
+  mapbox-gl-compare: ^0.4.1
   npm-run-all: ^4.1.5
   prettier: ^2.8.1
   typescript: ~4.7.4
@@ -29,6 +31,7 @@ specifiers:
   vue-tsc: ^0.38.9
 
 devDependencies:
+  '@mapbox/mapbox-gl-sync-move': 0.3.1
   '@rushstack/eslint-patch': 1.2.0
   '@types/geojson': 7946.0.10
   '@types/mapbox-gl': 2.7.10
@@ -47,6 +50,7 @@ devDependencies:
   geojson: 0.5.0
   happy-dom: 6.0.4
   mapbox-gl: 2.11.1
+  mapbox-gl-compare: 0.4.1
   npm-run-all: 4.1.5
   prettier: 2.8.1
   typescript: 4.7.4
@@ -180,6 +184,10 @@ packages:
 
   /@mapbox/mapbox-gl-supported/2.0.1:
     resolution: {integrity: sha512-HP6XvfNIzfoMVfyGjBckjiAOQK9WfX0ywdLubuPMPv+Vqf5fj0uCbgBQYpiqcWZT6cbyyRnTSXDheT1ugvF6UQ==}
+    dev: true
+
+  /@mapbox/mapbox-gl-sync-move/0.3.1:
+    resolution: {integrity: sha512-Y3PMyj0m/TBJa9OkQnO2TiVDu8sFUPmLF7q/THUHrD/g42qrURpMJJ4kufq4sR60YFMwZdCGBshrbgK5v2xXWw==}
     dev: true
 
   /@mapbox/point-geometry/0.1.0:
@@ -2034,6 +2042,12 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       semver: 6.3.0
+    dev: true
+
+  /mapbox-gl-compare/0.4.1:
+    resolution: {integrity: sha512-aLE1GK5oZywGwtRWjVnVz50Fudcod6d0tIxl4X5Rv/nhE8Kc64692S37F150amYvOFzzST+ylP25KgM6ApiPRA==}
+    dependencies:
+      '@mapbox/mapbox-gl-sync-move': 0.3.1
     dev: true
 
   /mapbox-gl/2.11.1:

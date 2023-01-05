@@ -1,12 +1,12 @@
 import { vi } from "vitest";
 
 // LngLatBounds
-function LngLatBounds() {}
+// function LngLatBounds() {}
 
-LngLatBounds.prototype.toArray = () => [
-  [-180, -90],
-  [180, 90],
-];
+// LngLatBounds.prototype.toArray = () => [
+//   [-180, -90],
+//   [180, 90],
+// ];
 
 // Map
 function Map() {
@@ -39,10 +39,10 @@ function Map() {
   return this;
 }
 
-Map.prototype.once = function once(_, listener, fn) {
-  const handler = typeof listener === "function" ? listener : fn;
-  handler({ target: this });
-};
+// Map.prototype.once = function once(_, listener, fn) {
+//   const handler = typeof listener === "function" ? listener : fn;
+//   handler({ target: this });
+// };
 
 Map.prototype.on = function on(_, listener, fn) {
   const handler = typeof listener === "function" ? listener : fn;
@@ -51,9 +51,9 @@ Map.prototype.on = function on(_, listener, fn) {
 
 Map.prototype.off = vi.fn();
 
-Map.prototype.getStyle = function getStyle() {
-  return this.style;
-};
+// Map.prototype.getStyle = function getStyle() {
+//   return this.style;
+// };
 
 Map.prototype.setStyle = vi.fn();
 Map.prototype.fitBounds = vi.fn();
@@ -97,9 +97,9 @@ Map.prototype.getSource = function getSource(name) {
   return source;
 };
 
-Map.prototype.isSourceLoaded = function isSourceLoaded(name) {
-  return !!this._sources[name];
-};
+// Map.prototype.isSourceLoaded = function isSourceLoaded(name) {
+//   return !!this._sources[name];
+// };
 
 Map.prototype.removeSource = function removeSource(name) {
   delete this._sources[name];
@@ -109,7 +109,7 @@ Map.prototype.addLayer = function addLayer(layer) {
   this._layers.push(layer);
 };
 
-Map.prototype.getLayer = function getLayer(id) {
+Map.prototype.getLayer = function getLayer(id: string) {
   const index = this._layers.findIndex((layer) => id === layer.id);
   if (index === -1) {
     return undefined;
@@ -118,7 +118,7 @@ Map.prototype.getLayer = function getLayer(id) {
   return this._layers[index];
 };
 
-Map.prototype.moveLayer = function moveLayer(id, before) {
+Map.prototype.moveLayer = function moveLayer(id: string, before: string) {
   const index = this._layers.findIndex((layer) => id === layer.id);
   const beforeIndex = this._layers.findIndex((layer) => before === layer.id);
   if (!this._layers[index] || !this._layers[beforeIndex]) {
@@ -130,7 +130,7 @@ Map.prototype.moveLayer = function moveLayer(id, before) {
   this._layers.splice(beforeIndex, 0, layer);
 };
 
-Map.prototype.removeLayer = function removeLayer(id) {
+Map.prototype.removeLayer = function removeLayer(id: string) {
   const index = this._layers.findIndex((layer) => id === layer.id);
   if (!this._layers[index]) {
     throw new Error();
@@ -139,24 +139,30 @@ Map.prototype.removeLayer = function removeLayer(id) {
   this._layers.splice(index, 1);
 };
 
-Map.prototype.loadImage = function loadImage(url, callback) {
+Map.prototype.loadImage = function loadImage(url: string, callback) {
   const data = new Uint8Array([]);
   callback(null, data);
 };
 
-Map.prototype.addImage = function addImage(id, image) {
+Map.prototype.addImage = function addImage(
+  id: string,
+  image: string | ImageBitmap
+) {
   this._images[id] = image;
 };
 
-Map.prototype.updateImage = function updateImage(id, image) {
+Map.prototype.updateImage = function updateImage(
+  id: string,
+  image: string | ImageBitmap
+) {
   this._images[id] = image;
 };
 
-Map.prototype.hasImage = function hasImage(id) {
+Map.prototype.hasImage = function hasImage(id: string) {
   return !!this._images[id];
 };
 
-Map.prototype.removeImage = function removeImage(id) {
+Map.prototype.removeImage = function removeImage(id: string) {
   delete this._images[id];
 };
 
@@ -174,7 +180,7 @@ Map.prototype.setPaintProperty = vi.fn();
 Map.prototype.setLayoutProperty = vi.fn();
 Map.prototype.setFilter = vi.fn();
 
-Map.prototype.getBounds = () => new LngLatBounds();
+// Map.prototype.getBounds = () => new LngLatBounds();
 
 function Popup() {
   this.setLngLat = vi.fn(() => this);
