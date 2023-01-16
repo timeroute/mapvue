@@ -12,6 +12,9 @@
           <router-link to="/vmap/syncmap">Sync VMap</router-link>
           <router-link to="/vmap/comparemap">Compare VMap</router-link>
           <router-link to="/vmap/flyzoom">Fly and Zoom</router-link>
+          <router-link to="/vmap/projection">
+            Projection
+          </router-link>
         </div>
       </section>
       <section>

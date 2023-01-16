@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import("./views/vmap/BasicMap.vue"),
     },
     {
+      path: "/vmap/projection",
+      name: "Projection",
+      component: () => import("./views/vmap/Projection.vue"),
+    },
+    {
       path: "/vmap/comparemap",
       name: "CompareMap",
       component: () => import("./views/vmap/CompareMap.vue"),

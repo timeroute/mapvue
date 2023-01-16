@@ -138,6 +138,14 @@ watch(
   }
 );
 
+watch(
+  () => props.options?.projection,
+  (projection) => {
+    if (!map.value) return;
+    map.value.setProjection(projection as any);
+  }
+);
+
 onMounted(() => {
   if (mapRef.value) {
     map.value = new mapboxgl.Map({
