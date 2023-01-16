@@ -4,7 +4,7 @@ import { reactive } from "vue";
 const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 interface IState {
-  proj: string;
+  proj: "albers" | "equalEarth" | "equirectangular" | "lambertConformalConic" | "mercator" | "naturalEarth" | "winkelTripel" | "globe";
 }
 
 const state = reactive<IState>({
