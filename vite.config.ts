@@ -1,18 +1,19 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import path from "path";
+import { resolve } from "node:path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": resolve(__dirname, "src"),
     },
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "packages/index.ts"),
+      entry: resolve(__dirname, "packages/index.ts"),
       name: "MapVue",
       fileName: "mapvue",
     },
@@ -24,6 +25,15 @@ export default defineConfig({
           "mapbox-gl": "mapbox-gl",
         },
       },
+    },
+  },
+  test: {
+    setupFiles: ["setupTest.ts"],
+    globals: true,
+    environment: "happy-dom",
+    coverage: {
+      provider: "v8",
+      reporter: [["json", { file: "coverage.json" }], ["text"]],
     },
   },
 });
