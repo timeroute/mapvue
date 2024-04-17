@@ -2,7 +2,7 @@ import { test, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import VMap from "../packages/Map.vue";
 import VHillshadeLayer from "../packages/Layers/HillshadeLayer.vue";
-import VGeoSource from "@/Sources/GeoSource.vue";
+import VGeoSource from "../packages/Sources/GeoSource.vue";
 import { defineComponent, nextTick, reactive } from "vue";
 
 function createComponent(accessToken: string | undefined) {

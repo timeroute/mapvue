@@ -2,7 +2,7 @@ import { test, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import VMap from "../packages/Map.vue";
 import VLineLayer from "../packages/Layers/LineLayer.vue";
-import VGeoSource from "@/Sources/GeoSource.vue";
+import VGeoSource from "../packages/Sources/GeoSource.vue";
 import { defineComponent, nextTick, reactive } from "vue";
 
 function createComponent(accessToken: string | undefined) {

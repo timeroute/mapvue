@@ -59,20 +59,16 @@ test("update vsprite url", async ({ accessToken }) => {
   wrapper.unmount();
 });
 
-test("update vsprite image", async ({ accessToken }) => {
-  const image = new Image();
-  image.src = "data:image/png;base64,iVBORw0K...";
+test("update vsprite base64", async ({ accessToken }) => {
   const wrapper = mount(createComponent(accessToken), {
     props: {
-      url: image,
+      url: "data:image/png;base64,iVBORw0K...",
       name: "test1",
     },
   });
   await nextTick();
-  const image2 = new Image();
-  image2.src = "data:image/png;base64,asdfasdfasdf...";
   wrapper.setProps({
-    url: image2,
+    url: "data:image/png;base64,asdfasdfasdf...",
     name: "test1",
   });
   await nextTick();
