@@ -3,15 +3,13 @@ import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 import type { AnySourceImpl, ImageSource } from "mapbox-gl";
 
-interface Props {
+const source = shallowRef<AnySourceImpl>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   url: string;
   coordinates: number[][];
-}
-
-const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 const updateImageSource = () => {
   if (!source.value) return;

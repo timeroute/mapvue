@@ -13,14 +13,12 @@ import {
 import { mapvueSymbol } from "../symbols";
 import { useMutationObserver } from "../composables";
 
-interface Props {
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   visible: boolean;
   center?: LngLatLike;
   options?: PopupOptions;
-}
-
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 const popup = shallowRef<Popup>();
 const emits = defineEmits<{
   (e: "update:visible", visible: boolean): void;

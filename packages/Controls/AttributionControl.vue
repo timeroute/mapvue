@@ -4,14 +4,12 @@ import type { IControl } from "mapbox-gl";
 import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 import { mapvueSymbol } from "../symbols";
 
-interface Props {
+const control = shallowRef<IControl>();
+const props = defineProps<{
   compact?: boolean;
   customAttribution?: string | string[];
   position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
-}
-
-const control = shallowRef<IControl>();
-const props = defineProps<Props>();
+}>();
 const map = inject(mapvueSymbol, undefined);
 
 onMounted(() => {

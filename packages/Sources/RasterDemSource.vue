@@ -3,7 +3,9 @@ import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 import { mapvueSymbol } from "../symbols";
 import type { AnySourceImpl, RasterDemSource } from "mapbox-gl";
 
-interface Props {
+const source = shallowRef<AnySourceImpl>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   url?: string;
   tiles?: string[];
@@ -15,11 +17,7 @@ interface Props {
   exaggeration?: number;
   encoding?: string;
   volatile?: boolean;
-}
-
-const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 onMounted(() => {
   if (!map) return;

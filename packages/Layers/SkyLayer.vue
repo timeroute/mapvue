@@ -11,15 +11,13 @@ import { inject, onMounted, onBeforeUnmount, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 import { diffObject } from "../utils";
 
-interface Props {
+const layer = shallowRef<AnyLayer>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   paint?: SkyPaint;
   layout?: SkyLayout;
-}
-
-const layer = shallowRef<AnyLayer>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 const updatePaintProperty = (name: string, value: unknown) => {
   if (!map) return;

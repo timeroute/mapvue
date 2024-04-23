@@ -13,14 +13,12 @@ import {
 import { mapvueSymbol } from "../symbols";
 import { useMutationObserver, useEventListener } from "../composables";
 
-interface Props {
-  center?: LngLatLike;
-  options?: MarkerOptions;
-}
-
 const marker = shallowRef<Marker>();
 const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+const props = defineProps<{
+  center?: LngLatLike;
+  options?: MarkerOptions;
+}>();
 const emits = defineEmits<{
   (e: "click", event: Event): void;
   (e: "mouseenter", event: Event): void;

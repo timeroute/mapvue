@@ -7,13 +7,12 @@ interface FeatureProps {
   id?: string;
   sourceLayer?: string;
 }
-interface Props {
-  feature: FeatureProps;
-  state: object;
-}
 
 const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+const props = defineProps<{
+  feature: FeatureProps;
+  state: object;
+}>();
 
 const setFeatureState = (feature: FeatureProps, state: object) => {
   if (!map) return;
