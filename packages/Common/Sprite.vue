@@ -2,13 +2,11 @@
 import { inject, onMounted, onUnmounted, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 
-interface Props {
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   name: string;
   url?: string;
-}
-
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 const updateImage = () => {
   if (!map) return;

@@ -13,12 +13,10 @@ import type { Map, LngLatLike } from "mapbox-gl";
 import { mapvueSymbol } from "./symbols";
 import type { MapboxOptions } from "./map";
 
-interface Props {
+const props = defineProps<{
   accessToken: string;
   options: MapboxOptions;
-}
-
-const props = defineProps<Props>();
+}>();
 const emits = defineEmits<{
   (e: "loaded"): void;
 }>();

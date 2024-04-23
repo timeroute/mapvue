@@ -14,7 +14,9 @@ import type {
   Geometry,
 } from "geojson";
 
-interface Props {
+const source = shallowRef<AnySourceImpl>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   data: object | string;
   attribution?: string;
@@ -30,11 +32,7 @@ interface Props {
   maxzoom?: number;
   protomteId?: PromoteIdSpecification;
   tolerance?: number;
-}
-
-const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 watch(
   () =>

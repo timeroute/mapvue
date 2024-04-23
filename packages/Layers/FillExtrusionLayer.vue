@@ -11,7 +11,9 @@ import { useLayerEvent } from "../composables";
 import { mapvueSymbol } from "../symbols";
 import { diffObject } from "../utils";
 
-interface Props {
+const layer = shallowRef<AnyLayer>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   source: string;
   sourceLayer?: string;
@@ -20,11 +22,7 @@ interface Props {
   minzoom?: number;
   maxzoom?: number;
   filter?: unknown[];
-}
-
-const layer = shallowRef<AnyLayer>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 const emits = defineEmits<{
   (e: "click", event: EventData): void;
   (e: "mousemove", event: EventData): void;

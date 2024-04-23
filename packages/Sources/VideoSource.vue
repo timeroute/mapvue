@@ -3,16 +3,14 @@ import { inject, onMounted, onUnmounted, shallowRef, watch } from "vue";
 import { mapvueSymbol } from "../symbols";
 import type { AnySourceImpl, CanvasSource, VideoSource } from "mapbox-gl";
 
-interface Props {
+const source = shallowRef<AnySourceImpl>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   urls: string[];
   coordinates: number[][];
   playing?: boolean;
-}
-
-const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 const updateVideoSource = () => {
   if (!map || !source.value) return;

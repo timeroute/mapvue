@@ -3,16 +3,14 @@ import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import type { AnySourceImpl, CanvasSource } from "mapbox-gl";
 import { mapvueSymbol } from "../symbols";
 
-interface Props {
-  id: string;
-  animate?: boolean;
-  coordinates: Array<Array<number>>;
-}
-
 const canvasRef = ref();
 const source = shallowRef<AnySourceImpl>();
 const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+const props = defineProps<{
+  id: string;
+  animate?: boolean;
+  coordinates: Array<Array<number>>;
+}>();
 
 defineExpose({
   canvas: canvasRef,

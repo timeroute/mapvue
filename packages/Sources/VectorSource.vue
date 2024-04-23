@@ -8,7 +8,9 @@ import type {
   VectorSourceImpl,
 } from "mapbox-gl";
 
-interface Props {
+const source = shallowRef<AnySourceImpl>();
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   id: string;
   url?: string;
   tiles?: string[];
@@ -19,11 +21,7 @@ interface Props {
   minzoom?: number;
   maxzoom?: number;
   volatile?: boolean;
-}
-
-const source = shallowRef<AnySourceImpl>();
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 watch(
   () => props.url,

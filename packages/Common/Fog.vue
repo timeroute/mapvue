@@ -3,17 +3,15 @@ import { inject, onMounted, onUnmounted, watch } from "vue";
 import type { Expression } from "mapbox-gl";
 import { mapvueSymbol } from "../symbols";
 
-interface Props {
+const map = inject(mapvueSymbol, undefined);
+const props = defineProps<{
   color?: string | Expression;
   "high-color"?: string | Expression;
   "space-color"?: string | Expression;
   "horizon-blend"?: number | Expression;
   range?: number[] | Expression;
   "star-intensity"?: number | Expression;
-}
-
-const map = inject(mapvueSymbol, undefined);
-const props = defineProps<Props>();
+}>();
 
 const renderFog = () => {
   if (!map) return;
