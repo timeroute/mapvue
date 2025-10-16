@@ -11,7 +11,7 @@
 
 **一个现代化的 Vue 3 地图组件库，基于 MapboxGL 构建**
 
-[� 文档](https://mapvue.netlify.app/zh/) | [🌐 English](./README.md) | [🎮 在线体验](https://codesandbox.io/s/vmap-examples-mnqjgn)
+[� 文档](https://mapvue.netlify.app/zh/) | [🌐 English](./README.md) | [🎮 在线体验](https://mapvuedemo.netlify.app/)
 
 </div>
 

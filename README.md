@@ -11,7 +11,7 @@
 
 **A modern Vue 3 map component library built on MapboxGL**
 
-[� Documentation](https://mapvue.netlify.app/) | [🇨🇳 中文](./README_CN.md) | [🎮 Live Demo](https://codesandbox.io/s/vmap-examples-mnqjgn)
+[� Documentation](https://mapvue.netlify.app/) | [🇨🇳 中文](./README_CN.md) | [🎮 Live Demo](https://mapvuedemo.netlify.app/)
 
 </div>
 
