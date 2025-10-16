@@ -35,7 +35,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "build:examples": "vite build --config vite.examples.config.ts",
     "preview": "vite preview --port 4173",
+    "preview:examples": "vite preview --port 4174 --config vite.examples.config.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
