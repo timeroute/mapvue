@@ -29,21 +29,17 @@ const handleLoaded = () => {
 
 <template>
   <div class="container">
-    <v-map
-      :accessToken="accessToken"
-      :options="{
-        center: [120, 30],
-        zoom: 4,
-        style: state.style,
-      }"
-      @loaded="handleLoaded"
-    />
+    <v-map :accessToken="accessToken" :options="{
+      center: [120, 30],
+      zoom: 4,
+      style: state.style,
+    }" @loaded="handleLoaded" />
   </div>
 </template>
 
 <style scoped>
 .container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 </style>
